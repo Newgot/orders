@@ -1,20 +1,39 @@
 <?php
 
-use yii\helpers\Html;
+use yii\widgets\LinkPager;
+use yii\data\Pagination;
+use app\modules\order\Facades\Filter;
 
 /** @var yii\web\View $this */
 /** @var array $orders */
+/** @var array $services */
+/** @var int $countServices */
+/** @var Pagination $pagination */
+/** @var array $pageCount */
+
 $this->title = 'Order'
 ?>
 
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
-        <li class="active"><a href="#">All orders</a></li>
-        <li><a href="#">Pending</a></li>
-        <li><a href="#">In progress</a></li>
-        <li><a href="#">Completed</a></li>
-        <li><a href="#">Canceled</a></li>
-        <li><a href="#">Error</a></li>
+        <li class="<?= Filter::rule('status') === '' ? 'active' : '' ?>">
+            <a href="#">All orders</a>
+        </li>
+        <li class="<?= Filter::rule('status') === '1' ? 'active' : '' ?>">
+            <a href="#">Pending</a>
+        </li>
+        <li class="<?= Filter::rule('status') === '2' ? 'active' : '' ?>">
+            <a href="#">In progress</a>
+        </li>
+        <li class="<?= Filter::rule('status') === '3' ? 'active' : '' ?>">
+            <a href="#">Completed</a>
+        </li>
+        <li class="<?= Filter::rule('status') === '4' ? 'active' : '' ?>">
+            <a href="#">Canceled</a>
+        </li>
+        <li class="<?= Filter::rule('status') === '5' ? 'active' : '' ?>">
+            <a href="#">Error</a>
+        </li>
         <li class="pull-right custom-search">
             <form class="form-inline" action="/admin/orders" method="get">
                 <div class="input-group">
@@ -48,14 +67,17 @@ $this->title = 'Order'
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="active"><a href="">All (894931)</a></li>
-                        <li><a href=""><span class="label-id">214</span> Real Views</a></li>
-                        <li><a href=""><span class="label-id">215</span> Page Likes</a></li>
-                        <li><a href=""><span class="label-id">10</span> Page Likes</a></li>
-                        <li><a href=""><span class="label-id">217</span> Page Likes</a></li>
-                        <li><a href=""><span class="label-id">221</span> Followers</a></li>
-                        <li><a href=""><span class="label-id">224</span> Groups Join</a></li>
-                        <li><a href=""><span class="label-id">230</span> Website Likes</a></li>
+                        <li class="<?= Filter::rule('service_id') === '' ? 'active' : '' ?>">
+                            <a href="">All (<?= $countServices ?>)</a>
+                        </li>
+                        <?php foreach ($services as $service): ?>
+                            <li class="<?= Filter::rule('service_id') === $service['id'] ? 'active' : '' ?>">
+                                <a href="<?= $service['id'] ?>">
+                                    <span class="label-id"><?= $service['cnt'] ?></span>
+                                    <?= $service['name'] ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </div>
             </th>
@@ -68,9 +90,15 @@ $this->title = 'Order'
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="active"><a href="">All</a></li>
-                        <li><a href="">Manual</a></li>
-                        <li><a href="">Auto</a></li>
+                        <li class="<?= Filter::rule('mode') === '' ? 'active' : '' ?>">
+                            <a href="">All</a>
+                        </li>
+                        <li class="<?= Filter::rule('mode') === '0' ? 'active' : '' ?>">
+                            <a href="">Manual</a>
+                        </li>
+                        <li class="<?= Filter::rule('mode') === '1' ? 'active' : '' ?>">
+                            <a href="">Auto</a>
+                        </li>
                     </ul>
                 </div>
             </th>
@@ -81,11 +109,12 @@ $this->title = 'Order'
         <?php foreach ($orders as $order): ?>
             <tr>
                 <td><?= $order->id ?></td>
-                <td><?= $order->user->first_name?> <?= $order->user->last_name ?></td>
+                <td><?= $order->user->first_name ?> <?= $order->user->last_name ?></td>
                 <td class="link"><?= $order->link ?></td>
                 <td><?= $order->quantity ?></td>
                 <td class="service">
-                    <span class="label-id">213</span><?= $order->service->name ?>
+                    <span class="label-id"><?= $services[$order->service->id]['cnt'] ?></span>
+                    <?= $order->service->name ?>
                 </td>
                 <td><?= $order->statusName ?></td>
                 <td><?= $order->modeName ?></td>
@@ -99,28 +128,15 @@ $this->title = 'Order'
     </table>
     <div class="row">
         <div class="col-sm-8">
-
             <nav>
-                <ul class="pagination">
-                    <li class="disabled"><a href="" aria-label="Previous">&laquo;</a></li>
-                    <li class="active"><a href="">1</a></li>
-                    <li><a href="">2</a></li>
-                    <li><a href="">3</a></li>
-                    <li><a href="">4</a></li>
-                    <li><a href="">5</a></li>
-                    <li><a href="">6</a></li>
-                    <li><a href="">7</a></li>
-                    <li><a href="">8</a></li>
-                    <li><a href="">9</a></li>
-                    <li><a href="">10</a></li>
-                    <li><a href="" aria-label="Next">&raquo;</a></li>
-                </ul>
+                <?= LinkPager::widget([
+                    'pagination' => $pagination
+                ]) ?>
             </nav>
-
         </div>
         <div class="col-sm-4 pagination-counters">
-            1 to 100 of 3263
+            <?= $pageCount['start'] ?> to <?= $pageCount['end'] ?> of <?= $pageCount['all'] ?>
         </div>
-
     </div>
+
 </div>

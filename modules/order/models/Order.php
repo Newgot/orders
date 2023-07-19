@@ -10,16 +10,16 @@ class Order extends ActiveRecord
     public const TABLE = 'orders';
 
     protected const STATUSES = [
-        0 => 'Pending',
-        1 => 'In progress',
-        2 => 'Completed',
-        3 => 'Canceled',
-        4 => 'Fail',
+        '0' => 'Pending',
+        '1' => 'In progress',
+        '2' => 'Completed',
+        '3' => 'Canceled',
+        '4' => 'Fail',
     ];
 
     protected const MODES = [
-        0 => 'Manual',
-        1 => 'Auto'
+        '0' => 'Manual',
+        '1' => 'Auto'
     ];
 
 
@@ -31,8 +31,6 @@ class Order extends ActiveRecord
 
     public function getName(): string
     {
-        $user = User::findOne($this->user_id);
-
         $firstName = !empty($this->first_name) ? $this->first_name : '';
         $lastName = !empty($this->last_name) ? $this->last_name : '';
         return "$firstName $lastName";
@@ -40,21 +38,21 @@ class Order extends ActiveRecord
 
     public function getStatusName(): string
     {
-        return array_key_exists((int)$this->status, self::STATUSES)
-            ? self::STATUSES[(int)$this->status]
+        return array_key_exists($this->status, self::STATUSES)
+            ? self::STATUSES[$this->status]
             : '';
     }
 
     public function getModeName(): string
     {
-        return array_key_exists((int)$this->mode, self::MODES)
-            ? self::MODES[(int)$this->mode]
+        return array_key_exists($this->mode, self::MODES)
+            ? self::MODES[$this->mode]
             : '';
     }
 
     public function getCreatedDate(): array
     {
-        $date = date('Y-m-d H:i:s');
+        $date = date('Y-m-d H:i:s', $this->created_at);
         return explode(' ', $date);
     }
 
