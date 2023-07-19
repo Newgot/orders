@@ -50,8 +50,14 @@ $config = [
             ],
         ],
         */
+
     ],
     'params' => $params,
+    'modules' => [
+        'order' => [
+            'class' => 'app\modules\order\Module',
+        ],
+    ],
 ];
 
 if (YII_ENV_DEV) {
