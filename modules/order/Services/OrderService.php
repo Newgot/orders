@@ -21,7 +21,7 @@ class OrderService
      */
     public function getOrders(int $offset): array
     {
-        return static::scopeOrdersQuery()
+        $orderQuery = static::scopeOrdersQuery()
             ->joinWith(['user' => function ($query) {
                 $query->from(User::TABLE);
             }])
@@ -29,8 +29,9 @@ class OrderService
                 $query->from(Service::TABLE);
             }])
             ->offset($offset)
-            ->limit(self::PAGINATION_LIMIT)
-            ->all();
+            ->limit(self::PAGINATION_LIMIT);
+
+        return Order::search($orderQuery)->all();
     }
 
     /**
@@ -107,7 +108,6 @@ class OrderService
                 User::TABLE . '.last_name',
                 Service::TABLE . '.name',
             ])
-            ->filterWhere(Filter::rules());
+            ->filterWhere(Order::rulesFilter());
     }
-
 }

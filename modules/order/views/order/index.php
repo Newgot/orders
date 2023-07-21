@@ -1,5 +1,6 @@
 <?php
 
+use app\modules\order\models\Order;
 use yii\widgets\LinkPager;
 use yii\data\Pagination;
 use app\modules\order\Facades\Filter;
@@ -16,22 +17,22 @@ $this->title = 'Order'
 
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
-        <li class="<?= Filter::rule('status') === '' ? 'active' : '' ?>">
+        <li class="<?= Order::ruleFilter('status') === '' ? 'active' : '' ?>">
             <a href="#">All orders</a>
         </li>
-        <li class="<?= Filter::rule('status') === '1' ? 'active' : '' ?>">
+        <li class="<?= Order::ruleFilter('status') === '1' ? 'active' : '' ?>">
             <a href="#">Pending</a>
         </li>
-        <li class="<?= Filter::rule('status') === '2' ? 'active' : '' ?>">
+        <li class="<?= Order::ruleFilter('status') === '2' ? 'active' : '' ?>">
             <a href="#">In progress</a>
         </li>
-        <li class="<?= Filter::rule('status') === '3' ? 'active' : '' ?>">
+        <li class="<?= Order::ruleFilter('status') === '3' ? 'active' : '' ?>">
             <a href="#">Completed</a>
         </li>
-        <li class="<?= Filter::rule('status') === '4' ? 'active' : '' ?>">
+        <li class="<?= Order::ruleFilter('status') === '4' ? 'active' : '' ?>">
             <a href="#">Canceled</a>
         </li>
-        <li class="<?= Filter::rule('status') === '5' ? 'active' : '' ?>">
+        <li class="<?= Order::ruleFilter('status') === '5' ? 'active' : '' ?>">
             <a href="#">Error</a>
         </li>
         <li class="pull-right custom-search">
@@ -67,11 +68,11 @@ $this->title = 'Order'
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="<?= Filter::rule('service_id') === '' ? 'active' : '' ?>">
+                        <li class="<?= Order::ruleFilter('service_id') === '' ? 'active' : '' ?>">
                             <a href="">All (<?= $countServices ?>)</a>
                         </li>
                         <?php foreach ($services as $service): ?>
-                            <li class="<?= Filter::rule('service_id') === $service['id'] ? 'active' : '' ?>">
+                            <li class="<?= Order::ruleFilter('service_id') === $service['id'] ? 'active' : '' ?>">
                                 <a href="<?= $service['id'] ?>">
                                     <span class="label-id"><?= $service['cnt'] ?></span>
                                     <?= $service['name'] ?>
@@ -90,13 +91,13 @@ $this->title = 'Order'
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="<?= Filter::rule('mode') === '' ? 'active' : '' ?>">
+                        <li class="<?= Order::ruleFilter('mode') === '' ? 'active' : '' ?>">
                             <a href="">All</a>
                         </li>
-                        <li class="<?= Filter::rule('mode') === '0' ? 'active' : '' ?>">
+                        <li class="<?= Order::ruleFilter('mode') === '0' ? 'active' : '' ?>">
                             <a href="">Manual</a>
                         </li>
-                        <li class="<?= Filter::rule('mode') === '1' ? 'active' : '' ?>">
+                        <li class="<?= Order::ruleFilter('mode') === '1' ? 'active' : '' ?>">
                             <a href="">Auto</a>
                         </li>
                     </ul>
