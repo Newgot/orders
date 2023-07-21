@@ -10,9 +10,9 @@ class Order extends ActiveRecord
 {
     public const TABLE = 'orders';
     public const FILTER_NAMES = ['service_id', 'mode', 'status'];
-    protected const SEARCH_ID = '1';
-    protected const SEARCH_LINK = '2';
-    protected const SEARCH_NAME = '3';
+    public const SEARCH_ID = '1';
+    public const SEARCH_LINK = '2';
+    public const SEARCH_NAME = '3';
 
     protected const STATUSES = [
         '0' => 'Pending',

@@ -3,6 +3,7 @@
 namespace app\modules\order\controllers;
 
 use app\modules\order\Services\OrderService;
+use Yii;
 use yii\web\Controller;
 
 class OrderController extends Controller
@@ -33,6 +34,10 @@ class OrderController extends Controller
             'countServices' => $countServices,
             'pagination' => $pagination,
             'pageCount' => $pageCount,
+            'queryParams' => [
+                'search' => Yii::$app->request->queryParams['search'] ?? '',
+                'searchType' => Yii::$app->request->queryParams['search-type'] ?? '',
+            ],
         ]);
     }
 }

@@ -12,6 +12,7 @@ use yii\data\Pagination;
 /** @var int $countServices */
 /** @var Pagination $pagination */
 /** @var array $pageCount */
+/** @var array $queryParams */
 
 $this->title = 'Order'
 ?>
@@ -48,6 +49,8 @@ $this->title = 'Order'
                 Error
             </a>
         </li>
+        <?php var_dump($queryParams);?>
+
         <li class="pull-right custom-search">
             <form
                     class="form-inline"
@@ -55,13 +58,32 @@ $this->title = 'Order'
                     method="get"
             >
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
+                    <input
+                            type="text"
+                            name="search"
+                            class="form-control"
+                            value="<?= $queryParams['search'] ?>"
+                            placeholder="Search orders"
+                    >
                     <span class="input-group-btn search-select-wrap">
-
             <select class="form-control search-select" name="search-type">
-              <option value="1" selected="">Order ID</option>
-              <option value="2">Link</option>
-              <option value="3">Username</option>
+              <option
+                      value="1"
+                  <?= $queryParams['searchType'] === Order::SEARCH_ID ?: 'selected=""' ?>
+              >
+                  Order ID
+              </option>
+              <option
+                      value="2"
+              <?= $queryParams['searchType'] === Order::SEARCH_LINK ?: 'selected=""' ?>
+              >
+                  Link
+              </option>
+              <option value="3"
+              <?= $queryParams['searchType'] === Order::SEARCH_NAME ?: 'selected=""' ?>
+              >
+                  Username
+              </option>
             </select>
             <button type="submit" class="btn btn-default">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
