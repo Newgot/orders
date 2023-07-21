@@ -2,7 +2,6 @@
 
 namespace app\modules\order\models;
 
-use app\modules\order\Facades\Filter;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
