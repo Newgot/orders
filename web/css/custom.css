@@ -2165,7 +2165,7 @@ input[type="checkbox"].selectOrder{
 }
 
 .twig-editor-list{
-  padding:0px;
+  padding:0;
   margin: 0;
 }
 .twig-editor-list .active a{
