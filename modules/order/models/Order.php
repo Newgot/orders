@@ -10,9 +10,10 @@ class Order extends ActiveRecord
 {
     public const TABLE = 'orders';
     public const FILTER_NAMES = ['service_id', 'mode', 'status'];
-    protected const SEARCH_NAME = 'name';
-    protected const SEARCH_ID = 'id';
-    protected const SEARCH_LINK = 'link';
+    protected const SEARCH_ID = '1';
+    protected const SEARCH_LINK = '2';
+    protected const SEARCH_NAME = '3';
+
     protected const STATUSES = [
         '0' => 'Pending',
         '1' => 'In progress',
@@ -99,15 +100,17 @@ class Order extends ActiveRecord
     public static function search(ActiveQuery $query): ActiveQuery
     {
         $params = Yii::$app->request->queryParams;
-        foreach ($params as $keyParam => $param) {
-            if ($keyParam === self::SEARCH_NAME) {
+        if (!empty($params['search-type']) && !empty($params['search'])) {
+            $searchType = $params['search-type'];
+            $search = $params['search'];
+            if ($searchType === self::SEARCH_NAME) {
                 $query->where(
-                    'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $param . '%"'
+                    'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $search . '%"'
                 );
-            } elseif ($keyParam === self::SEARCH_ID) {
-                $query->where(['LIKE', Order::TABLE . '.id', $param]);
-            } elseif ($keyParam === self::SEARCH_LINK) {
-                $query->where(['LIKE', Order::TABLE . '.link', $param]);
+            } elseif ($searchType === self::SEARCH_ID) {
+                $query->where(['LIKE', Order::TABLE . '.id', $search]);
+            } elseif ($searchType === self::SEARCH_LINK) {
+                $query->where(['LIKE', Order::TABLE . '.link', $search]);
             }
         }
         return $query;

@@ -1,9 +1,10 @@
 <?php
 
+use app\modules\order\helpers\OrderUrlHelper;
 use app\modules\order\models\Order;
+use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use yii\data\Pagination;
-use app\modules\order\Facades\Filter;
 
 /** @var yii\web\View $this */
 /** @var array $orders */
@@ -18,25 +19,41 @@ $this->title = 'Order'
 <div class="container-fluid">
     <ul class="nav nav-tabs p-b">
         <li class="<?= Order::ruleFilter('status') === '' ? 'active' : '' ?>">
-            <a href="#">All orders</a>
+            <a href="<?= Url::to(['index']) ?>">
+                All orders
+            </a>
+        </li>
+        <li class="<?= Order::ruleFilter('status') === '0' ? 'active' : '' ?>">
+            <a href="<?= Url::to(['index', 'status' => 0]) ?>">
+                Pending
+            </a>
         </li>
         <li class="<?= Order::ruleFilter('status') === '1' ? 'active' : '' ?>">
-            <a href="#">Pending</a>
+            <a href="<?= Url::to(['index', 'status' => 1]) ?>">
+                In progress
+            </a>
         </li>
         <li class="<?= Order::ruleFilter('status') === '2' ? 'active' : '' ?>">
-            <a href="#">In progress</a>
+            <a href="<?= Url::to(['index', 'status' => 2]) ?>">
+                Completed
+            </a>
         </li>
         <li class="<?= Order::ruleFilter('status') === '3' ? 'active' : '' ?>">
-            <a href="#">Completed</a>
+            <a href="<?= Url::to(['index', 'status' => 3]) ?>">
+                Canceled
+            </a>
         </li>
         <li class="<?= Order::ruleFilter('status') === '4' ? 'active' : '' ?>">
-            <a href="#">Canceled</a>
-        </li>
-        <li class="<?= Order::ruleFilter('status') === '5' ? 'active' : '' ?>">
-            <a href="#">Error</a>
+            <a href="<?= Url::to(['index', 'status' => 4]) ?>">
+                Error
+            </a>
         </li>
         <li class="pull-right custom-search">
-            <form class="form-inline" action="/admin/orders" method="get">
+            <form
+                    class="form-inline"
+                    action="<?= Url::to(OrderUrlHelper::unset('index', ['search', 'search-type'])) ?>"
+                    method="get"
+            >
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" value="" placeholder="Search orders">
                     <span class="input-group-btn search-select-wrap">
@@ -46,8 +63,8 @@ $this->title = 'Order'
               <option value="2">Link</option>
               <option value="3">Username</option>
             </select>
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"
-                                                                aria-hidden="true"></span></button>
+            <button type="submit" class="btn btn-default">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </span>
                 </div>
             </form>
@@ -69,11 +86,13 @@ $this->title = 'Order'
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li class="<?= Order::ruleFilter('service_id') === '' ? 'active' : '' ?>">
-                            <a href="">All (<?= $countServices ?>)</a>
+                            <a href="<?= Url::to(OrderUrlHelper::unset('index', ['service_id'])); ?>">
+                                All (<?= $countServices ?>)
+                            </a>
                         </li>
                         <?php foreach ($services as $service): ?>
                             <li class="<?= Order::ruleFilter('service_id') === $service['id'] ? 'active' : '' ?>">
-                                <a href="<?= $service['id'] ?>">
+                                <a href="<?= Url::to(OrderUrlHelper::set('index', ['service_id' => $service['id']]), true) ?>">
                                     <span class="label-id"><?= $service['cnt'] ?></span>
                                     <?= $service['name'] ?>
                                 </a>
@@ -92,13 +111,19 @@ $this->title = 'Order'
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li class="<?= Order::ruleFilter('mode') === '' ? 'active' : '' ?>">
-                            <a href="">All</a>
+                            <a href="<?= Url::to(OrderUrlHelper::unset('index', ['mode'])) ?>">
+                                All
+                            </a>
                         </li>
                         <li class="<?= Order::ruleFilter('mode') === '0' ? 'active' : '' ?>">
-                            <a href="">Manual</a>
+                            <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => '0'])) ?>">
+                                Manual
+                            </a>
                         </li>
                         <li class="<?= Order::ruleFilter('mode') === '1' ? 'active' : '' ?>">
-                            <a href="">Auto</a>
+                            <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => '1'])) ?>">
+                                Auto
+                            </a>
                         </li>
                     </ul>
                 </div>

@@ -2,7 +2,6 @@
 
 namespace app\modules\order\Services;
 
-use app\modules\order\Facades\Filter;
 use app\modules\order\models\Order;
 use app\modules\order\models\Service;
 use app\modules\order\models\User;
@@ -40,9 +39,11 @@ class OrderService
      */
     public function getPagination(): Pagination
     {
+        $count = Order::search(static::scopeOrdersQuery())->count();
         return new Pagination([
             'pageSize' => self::PAGINATION_LIMIT,
-            'totalCount' => static::scopeOrdersQuery()->count()
+            'totalCount' => $count,
+
         ]);
     }
 
@@ -89,7 +90,7 @@ class OrderService
     public function getPageCounts(int $page): array
     {
         return [
-            'all' => static::scopeOrdersQuery()->count(),
+            'all' => Order::search(static::scopeOrdersQuery())->count(),
             'start' => self::PAGINATION_LIMIT * ($page - 1) + 1,
             'end' => self::PAGINATION_LIMIT * $page,
         ];
