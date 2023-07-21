@@ -49,8 +49,6 @@ $this->title = 'Order'
                 Error
             </a>
         </li>
-        <?php var_dump($queryParams);?>
-
         <li class="pull-right custom-search">
             <form
                     class="form-inline"
