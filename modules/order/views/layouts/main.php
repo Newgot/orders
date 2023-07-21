@@ -40,9 +40,7 @@ $this->beginPage();
             </div>
         </div>
     </nav>
-    <div class="container-fluid">
-        <?= $content ?>
-    </div>
+    <?= $content ?>
     <?php $this->endBody() ?>
     </body>
     </html>
