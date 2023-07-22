@@ -1,9 +1,6 @@
 <?php
 
-use app\modules\order\helpers\OrderUrlHelper;
-use app\modules\order\models\Order;
-use yii\helpers\Url;
-use yii\widgets\LinkPager;
+use app\modules\order\Module;
 use yii\data\Pagination;
 
 /** @var yii\web\View $this */
@@ -14,175 +11,26 @@ use yii\data\Pagination;
 /** @var array $pageCount */
 /** @var array $queryParams */
 
-$this->title = 'Order'
+$this->title = Module::TITLE
 ?>
 
 <div class="container-fluid">
-    <ul class="nav nav-tabs p-b">
-        <li class="<?= Order::ruleFilter('status') === '' ? 'active' : '' ?>">
-            <a href="<?= Url::to(['index']) ?>">
-                <?= Yii::t('order', 'All orders') ?>
-            </a>
-        </li>
-        <li class="<?= Order::ruleFilter('status') === '0' ? 'active' : '' ?>">
-            <a href="<?= Url::to(['index', 'status' => 0]) ?>">
-                  <?= Yii::t('order', 'Pending') ?>
-            </a>
-        </li>
-        <li class="<?= Order::ruleFilter('status') === '1' ? 'active' : '' ?>">
-            <a href="<?= Url::to(['index', 'status' => 1]) ?>">
-                <?= Yii::t('order', 'In progress') ?>
-            </a>
-        </li>
-        <li class="<?= Order::ruleFilter('status') === '2' ? 'active' : '' ?>">
-            <a href="<?= Url::to(['index', 'status' => 2]) ?>">
-                <?= Yii::t('order', 'Completed') ?>
-            </a>
-        </li>
-        <li class="<?= Order::ruleFilter('status') === '3' ? 'active' : '' ?>">
-            <a href="<?= Url::to(['index', 'status' => 3]) ?>">
-                <?= Yii::t('order', 'Canceled') ?>
-            </a>
-        </li>
-        <li class="<?= Order::ruleFilter('status') === '4' ? 'active' : '' ?>">
-            <a href="<?= Url::to(['index', 'status' => 4]) ?>">
-                <?= Yii::t('order', 'Error') ?>
-            </a>
-        </li>
-        <li class="pull-right custom-search">
-            <form
-                    class="form-inline"
-                    action="<?= Url::to(OrderUrlHelper::unset('index', ['search', 'search-type'])) ?>"
-                    method="get"
-            >
-                <div class="input-group">
-                    <input
-                            type="text"
-                            name="search"
-                            class="form-control"
-                            value="<?= $queryParams['search'] ?>"
-                            placeholder="Search orders"
-                    >
-                    <span class="input-group-btn search-select-wrap">
-            <select class="form-control search-select" name="search-type">
-              <option
-                      value="1"
-                  <?= $queryParams['searchType'] === Order::SEARCH_ID ?: 'selected=""' ?>
-              >
-                  <?= Yii::t('order', 'Order ID') ?>
-              </option>
-              <option
-                      value="2"
-              <?= $queryParams['searchType'] === Order::SEARCH_LINK ?: 'selected=""' ?>
-              >
-                  <?= Yii::t('order', 'Link') ?>
-              </option>
-              <option value="3"
-              <?= $queryParams['searchType'] === Order::SEARCH_NAME ?: 'selected=""' ?>
-              >
-                  <?= Yii::t('order', 'Username') ?>
-              </option>
-            </select>
-            <button type="submit" class="btn btn-default">
-                <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-            </span>
-                </div>
-            </form>
-        </li>
-    </ul>
+    <?= $this->render('nav', ['queryParams' => $queryParams]) ?>
     <table class="table order-table">
-        <thead>
-        <tr>
-            <th><?= Yii::t('order', 'ID') ?></th>
-            <th><?= Yii::t('order', 'User') ?></th>
-            <th><?= Yii::t('order', 'Link') ?></th>
-            <th><?= Yii::t('order', 'Quantity') ?></th>
-            <th class="dropdown-th">
-                <div class="dropdown">
-                    <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <?= Yii::t('order', 'Service') ?>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="<?= Order::ruleFilter('service_id') === '' ? 'active' : '' ?>">
-                            <a href="<?= Url::to(OrderUrlHelper::unset('index', ['service_id'])); ?>">
-                                <?= Yii::t('order', 'All') ?> (<?= $countServices ?>)
-                            </a>
-                        </li>
-                        <?php foreach ($services as $service): ?>
-                            <li class="<?= Order::ruleFilter('service_id') === $service['id'] ? 'active' : '' ?>">
-                                <a href="<?= Url::to(OrderUrlHelper::set('index', ['service_id' => $service['id']]), true) ?>">
-                                    <span class="label-id"><?= $service['cnt'] ?></span>
-                                    <?= $service['name'] ?>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
-            </th>
-            <th><?= Yii::t('order', 'Status') ?></th>
-            <th class="dropdown-th">
-                <div class="dropdown">
-                    <button class="btn btn-th btn-default dropdown-toggle" type="button" id="dropdownMenu1"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <?= Yii::t('order', 'Mode') ?>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li class="<?= Order::ruleFilter('mode') === '' ? 'active' : '' ?>">
-                            <a href="<?= Url::to(OrderUrlHelper::unset('index', ['mode'])) ?>">
-                                <?= Yii::t('order', 'All') ?>
-                            </a>
-                        </li>
-                        <li class="<?= Order::ruleFilter('mode') === '0' ? 'active' : '' ?>">
-                            <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => '0'])) ?>">
-                                <?= Yii::t('order', 'Manual') ?>
-                            </a>
-                        </li>
-                        <li class="<?= Order::ruleFilter('mode') === '1' ? 'active' : '' ?>">
-                            <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => '1'])) ?>">
-                                <?= Yii::t('order', 'Auto') ?>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </th>
-            <th><?= Yii::t('order', 'Created') ?></th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach ($orders as $order): ?>
-            <tr>
-                <td><?= $order->id ?></td>
-                <td><?= $order->user->first_name ?> <?= $order->user->last_name ?></td>
-                <td class="link"><?= $order->link ?></td>
-                <td><?= $order->quantity ?></td>
-                <td class="service">
-                    <span class="label-id"><?= $services[$order->service->id]['cnt'] ?></span>
-                    <?= $order->service->name ?>
-                </td>
-                <td><?= $order->statusName ?></td>
-                <td><?= $order->modeName ?></td>
-                <td>
-                    <span class="nowrap"><?= $order->createdDate[0] ?></span>
-                    <span class="nowrap"><?= $order->createdDate[1] ?></span>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-        </tbody>
+        <?= $this->render('table/head', [
+            'services' => $services,
+            'countServices' => $countServices,
+        ])
+        ?>
+        <?= $this->render('table/body', [
+            'services' => $services,
+            'orders' => $orders,
+        ])
+        ?>
     </table>
-    <div class="row">
-        <div class="col-sm-8">
-            <nav>
-                <?= LinkPager::widget([
-                    'pagination' => $pagination
-                ]) ?>
-            </nav>
-        </div>
-        <div class="col-sm-4 pagination-counters">
-            <?= Yii::t('order', '{start} to {end} of {all}', $pageCount) ?>
-        </div>
-    </div>
-
+    <?= $this->render('pagination', [
+        'pagination' => $pagination,
+        'pageCount' => $pageCount,
+    ])
+    ?>
 </div>

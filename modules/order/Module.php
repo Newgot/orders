@@ -6,6 +6,7 @@ use yii\i18n\PhpMessageSource;
 
 class Module extends \yii\base\Module
 {
+    const TITLE = 'Order';
     public function init() {
         parent::init();
         $this->layout = 'main';
