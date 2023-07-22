@@ -6,6 +6,8 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'language' => 'en',
+    'sourceLanguage' => 'en',
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -50,13 +52,11 @@ $config = [
             'rules' => [
             ],
         ],
-
-
     ],
     'params' => $params,
     'modules' => [
         'order' => [
-            'class' => 'app\modules\order\Module',
+            'class' => app\modules\order\Module::class,
         ],
     ],
 ];
