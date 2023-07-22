@@ -1,7 +1,9 @@
 <?php
 
+use app\modules\order\helpers\OrderUrlHelper;
 use app\modules\order\Module;
 use yii\data\Pagination;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var array $orders */
@@ -33,4 +35,6 @@ $this->title = Module::TITLE
         'pageCount' => $pageCount,
     ])
     ?>
+    <a href="<?= Url::to(OrderUrlHelper::unset('order/load', [])) ?>">Save Result</a>
+
 </div>

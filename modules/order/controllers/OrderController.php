@@ -2,6 +2,8 @@
 
 namespace app\modules\order\controllers;
 
+use app\modules\order\helpers\OrderUrlHelper;
+use app\modules\order\models\Order;
 use app\modules\order\Services\OrderService;
 use Yii;
 use yii\web\Controller;
@@ -39,5 +41,16 @@ class OrderController extends Controller
                 'searchType' => Yii::$app->request->queryParams['search-type'] ?? '',
             ],
         ]);
+    }
+
+    /**
+     * generate csv file
+     * @return string
+     */
+    public function actionLoad(): string
+    {
+        ini_set('memory_limit', '2G');
+        OrderUrlHelper::setCSVHeader();
+        return $this->service->csv();
     }
 }

@@ -23,4 +23,14 @@ class OrderUrlHelper
         }
         return $res;
     }
+
+    public static function setCSVHeader(): void
+    {
+        header('Content-type: text/csv');
+        header('Content-Disposition: attachment; filename="exported_(' . date('H-i_d.m.Y') .').csv"');
+        header('Content-Transfer-Encoding: binary');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Content-Description: File Transfer');
+    }
 }

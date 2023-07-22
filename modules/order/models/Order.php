@@ -5,6 +5,7 @@ namespace app\modules\order\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use app\modules\order\models\Service;
 
 class Order extends ActiveRecord
 {
@@ -33,8 +34,8 @@ class Order extends ActiveRecord
 
     public function getName(): string
     {
-        $firstName = !empty($this->first_name) ? $this->first_name : '';
-        $lastName = !empty($this->last_name) ? $this->last_name : '';
+        $firstName = !empty($this->user->first_name) ? $this->user->first_name : '';
+        $lastName = !empty($this->user->last_name) ? $this->user->last_name : '';
         return "$firstName $lastName";
     }
 
@@ -76,6 +77,7 @@ class Order extends ActiveRecord
     {
         $params = Yii::$app->request->queryParams;
         $rules = [];
+
         foreach ($params as $keyParam => $param) {
             if (in_array($keyParam, self::FILTER_NAMES)) {
                 $rules[$keyParam] = $param;
@@ -97,6 +99,11 @@ class Order extends ActiveRecord
             : '';
     }
 
+    /**
+     * search for get params
+     * @param ActiveQuery $query
+     * @return ActiveQuery
+     */
     public static function search(ActiveQuery $query): ActiveQuery
     {
         $params = Yii::$app->request->queryParams;
@@ -114,5 +121,36 @@ class Order extends ActiveRecord
             }
         }
         return $query;
+    }
+
+    /**
+     * generate sql from orders table
+     * @return ActiveQuery
+     */
+    public static function scopeOrdersQuery(): ActiveQuery
+    {
+        return Order::find()
+            ->select([
+                Order::TABLE . '.*',
+                User::TABLE . '.first_name',
+                User::TABLE . '.last_name',
+                Service::TABLE . '.name',
+            ])
+            ->filterWhere(Order::rulesFilter());
+    }
+
+    /**
+     * generate sql from orders table jons users and services table
+     * @return ActiveQuery
+     */
+    public static function scopeAll(): ActiveQuery
+    {
+        return self::scopeOrdersQuery()
+            ->joinWith(['user' => function ($query) {
+                $query->from(User::TABLE);
+            }])
+            ->joinWith(['service' => function ($query) {
+                $query->from(Service::TABLE);
+            }]);
     }
 }

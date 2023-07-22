@@ -4,9 +4,8 @@ namespace app\modules\order\Services;
 
 use app\modules\order\models\Order;
 use app\modules\order\models\Service;
-use app\modules\order\models\User;
+use Yii;
 use yii\data\Pagination;
-use yii\db\ActiveQuery;
 use yii\db\Query;
 
 class OrderService
@@ -18,15 +17,9 @@ class OrderService
      * @param int $offset
      * @return array
      */
-    public function getOrders(int $offset): array
+    public function getOrders(int $offset = 0): array
     {
-        $orderQuery = static::scopeOrdersQuery()
-            ->joinWith(['user' => function ($query) {
-                $query->from(User::TABLE);
-            }])
-            ->joinWith(['service' => function ($query) {
-                $query->from(Service::TABLE);
-            }])
+        $orderQuery = Order::scopeAll()
             ->offset($offset)
             ->limit(self::PAGINATION_LIMIT);
 
@@ -39,11 +32,10 @@ class OrderService
      */
     public function getPagination(): Pagination
     {
-        $count = Order::search(static::scopeOrdersQuery())->count();
+        $count = Order::search(Order::scopeOrdersQuery())->count();
         return new Pagination([
             'pageSize' => self::PAGINATION_LIMIT,
             'totalCount' => $count,
-
         ]);
     }
 
@@ -90,25 +82,42 @@ class OrderService
     public function getPageCounts(int $page): array
     {
         return [
-            'all' => Order::search(static::scopeOrdersQuery())->count(),
+            'all' => Order::search(Order::scopeOrdersQuery())->count(),
             'start' => self::PAGINATION_LIMIT * ($page - 1) + 1,
             'end' => self::PAGINATION_LIMIT * $page,
         ];
     }
 
     /**
-     * scope of order query
-     * @return ActiveQuery
+     * get csv file
+     * @return string
      */
-    protected static function scopeOrdersQuery(): ActiveQuery
+    public function csv(): string
     {
-        return Order::find()
-            ->select([
-                Order::TABLE . '.*',
-                User::TABLE . '.first_name',
-                User::TABLE . '.last_name',
-                Service::TABLE . '.name',
-            ])
-            ->filterWhere(Order::rulesFilter());
+        $file = $this->getCSVHead();
+        foreach (Order::search(Order::scopeAll())->all() as $order) {
+            /** @var Order $order */
+            $created = date('Y-m-d H:i:s');
+            $file .= "$order->id, $order->name, $order->link, $order->quantity, ";
+            $file .= "{$order->service->name}, $order->statusName, $order->modeName, $created" . PHP_EOL;
+        }
+        return $file;
+    }
+
+    /**
+     * get names line from csv
+     * @return string
+     */
+    protected function getCSVHead(): string
+    {
+        return
+            Yii::t('order', 'ID') . ', ' .
+            Yii::t('order', 'User') . ', ' .
+            Yii::t('order', 'Link') . ', ' .
+            Yii::t('order', 'Quantity') . ', ' .
+            Yii::t('order', 'Service') . ', ' .
+            Yii::t('order', 'Status') . ', ' .
+            Yii::t('order', 'Mode') . ', ' .
+            Yii::t('order', 'Created') . PHP_EOL;
     }
 }
