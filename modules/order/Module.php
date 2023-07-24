@@ -11,7 +11,6 @@ class Module extends \yii\base\Module
         parent::init();
         $this->layout = 'main';
         Yii::setAlias('@order', __DIR__);
-        Yii::setAlias('@orderRoot', __DIR__ . '/web');
         Yii::$app->i18n->translations['order'] = [
             'class' => PhpMessageSource::class,
             'sourceLanguage' => 'en-US',
