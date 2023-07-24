@@ -5,7 +5,6 @@ namespace app\modules\order\models;
 use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
-use app\modules\order\models\Service;
 
 class Order extends ActiveRecord
 {
@@ -102,46 +101,6 @@ class Order extends ActiveRecord
     }
 
     /**
-     * search for get params
-     * @param ActiveQuery $query
-     * @return ActiveQuery
-     */
-    public static function search(ActiveQuery $query): ActiveQuery
-    {
-        $params = Yii::$app->request->queryParams;
-        if (!empty($params['search-type']) && !empty($params['search'])) {
-            $searchType = $params['search-type'];
-            $search = $params['search'];
-            if ($searchType === self::SEARCH_NAME) {
-                $query->where(
-                    'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $search . '%"'
-                );
-            } elseif ($searchType === self::SEARCH_ID) {
-                $query->where(['LIKE', Order::TABLE . '.id', $search]);
-            } elseif ($searchType === self::SEARCH_LINK) {
-                $query->where(['LIKE', Order::TABLE . '.link', $search]);
-            }
-        }
-        return $query;
-    }
-
-    /**
-     * generate sql from orders table
-     * @return ActiveQuery
-     */
-    public static function scopeOrdersQuery(): ActiveQuery
-    {
-        return Order::find()
-            ->select([
-                Order::TABLE . '.*',
-                User::TABLE . '.first_name',
-                User::TABLE . '.last_name',
-                Service::TABLE . '.name',
-            ])
-            ->filterWhere(Order::rulesFilter());
-    }
-
-    /**
      * generate sql from orders table jons users and services table
      * @return ActiveQuery
      */
@@ -154,5 +113,20 @@ class Order extends ActiveRecord
             ->joinWith(['service' => function ($query) {
                 $query->from(Service::TABLE);
             }]);
+    }
+
+    /**
+     * generate sql from orders table
+     * @return ActiveQuery
+     */
+    protected static function scopeOrdersQuery(): ActiveQuery
+    {
+        return Order::find()
+            ->select([
+                Order::TABLE . '.*',
+                User::TABLE . '.first_name',
+                User::TABLE . '.last_name',
+                Service::TABLE . '.name',
+            ]);
     }
 }

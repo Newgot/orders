@@ -3,6 +3,7 @@
 namespace app\modules\order\Services;
 
 use app\modules\order\models\Order;
+use app\modules\order\models\OrderSearch;
 use app\modules\order\models\Service;
 use Yii;
 use yii\data\Pagination;
@@ -19,11 +20,10 @@ class OrderService
      */
     public function getOrders(int $offset = 0): array
     {
-        $orderQuery = Order::scopeAll()
+        return OrderSearch::search()
             ->offset($offset)
-            ->limit(self::PAGINATION_LIMIT);
-
-        return Order::search($orderQuery)->all();
+            ->limit(self::PAGINATION_LIMIT)
+            ->all();
     }
 
     /**
@@ -32,7 +32,7 @@ class OrderService
      */
     public function getPagination(): Pagination
     {
-        $count = Order::search(Order::scopeOrdersQuery())->count();
+        $count = OrderSearch::search()->count();
         return new Pagination([
             'pageSize' => self::PAGINATION_LIMIT,
             'totalCount' => $count,
@@ -82,7 +82,7 @@ class OrderService
     public function getPageCounts(int $page): array
     {
         return [
-            'all' => Order::search(Order::scopeOrdersQuery())->count(),
+            'all' => OrderSearch::search()->count(),
             'start' => self::PAGINATION_LIMIT * ($page - 1) + 1,
             'end' => self::PAGINATION_LIMIT * $page,
         ];
@@ -95,7 +95,7 @@ class OrderService
     public function csv(): string
     {
         $file = $this->getCSVHead();
-        foreach (Order::search(Order::scopeAll())->all() as $order) {
+        foreach (OrderSearch::search()->all() as $order) {
             /** @var Order $order */
             $created = date('Y-m-d H:i:s');
             $file .= "$order->id, $order->name, $order->link, $order->quantity, ";
