@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\order\Services;
+namespace app\modules\order\services;
 
 use app\modules\order\models\Order;
 use app\modules\order\models\OrderSearch;

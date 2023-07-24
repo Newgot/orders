@@ -3,7 +3,7 @@
 namespace app\modules\order\controllers;
 
 use app\modules\order\helpers\OrderUrlHelper;
-use app\modules\order\Services\OrderService;
+use app\modules\order\services\OrderService;
 use Yii;
 use yii\web\Controller;
 

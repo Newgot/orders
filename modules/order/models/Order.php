@@ -35,11 +35,17 @@ class Order extends ActiveRecord
         '4' => 'Fail',
     ];
 
+    /**
+     * @return string
+     */
     public static function tableName(): string
     {
         return '{{' . self::TABLE . '}}';
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         $firstName = !empty($this->user->first_name) ? $this->user->first_name : '';
@@ -47,6 +53,9 @@ class Order extends ActiveRecord
         return "$firstName $lastName";
     }
 
+    /**
+     * @return string
+     */
     public function getStatusName(): string
     {
         return array_key_exists($this->status, self::STATUSES)
@@ -54,6 +63,9 @@ class Order extends ActiveRecord
             : '';
     }
 
+    /**
+     * @return string
+     */
     public function getModeName(): string
     {
         return array_key_exists($this->mode, self::MODES)
@@ -61,17 +73,26 @@ class Order extends ActiveRecord
             : '';
     }
 
+    /**
+     * @return array
+     */
     public function getCreatedDate(): array
     {
         $date = date('Y-m-d H:i:s', $this->created_at);
         return explode(' ', $date);
     }
 
+    /**
+     * @return ActiveQuery
+     */
     public function getUser(): ActiveQuery
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    /**
+     * @return ActiveQuery
+     */
     public function getServiceOrder(): ActiveQuery
     {
         return $this->hasOne(Service::class, ['id' => 'service_id']);
