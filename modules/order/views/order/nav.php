@@ -14,7 +14,7 @@ use yii\helpers\Url;
         </a>
     </li>
     <?php foreach (Order::STATUSES as $statusId => $statusName): ?>
-        <li class="<?= Order::ruleFilter('status') === $statusId ? 'active' : '' ?>">
+        <li class="<?= Order::ruleFilter('status') === (string)$statusId ? 'active' : '' ?>">
             <a href="<?= Url::to(['index', 'status' => $statusId]) ?>">
                 <?= Yii::t('order', $statusName) ?>
             </a>
