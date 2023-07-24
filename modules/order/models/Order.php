@@ -14,17 +14,19 @@ class Order extends ActiveRecord
     public const SEARCH_ID = '1';
     public const SEARCH_LINK = '2';
     public const SEARCH_NAME = '3';
-
-    protected const STATUSES = [
+    public const SERVICES_ALL = '';
+    public const MODE_ALL = '';
+    public const MODES = [
+        '0' => 'Manual',
+        '1' => 'Auto'
+    ];
+    public const STATUSES = [
+        '' => 'All orders',
         '0' => 'Pending',
         '1' => 'In progress',
         '2' => 'Completed',
         '3' => 'Canceled',
         '4' => 'Fail',
-    ];
-    protected const MODES = [
-        '0' => 'Manual',
-        '1' => 'Auto'
     ];
 
     public static function tableName(): string

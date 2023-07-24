@@ -52,16 +52,13 @@ use yii\helpers\Url;
                         <?= Yii::t('order', 'All') ?>
                     </a>
                 </li>
-                <li class="<?= Order::ruleFilter('mode') === Order::MODE_MANUAL ? 'active' : '' ?>">
-                    <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => '0'])) ?>">
-                        <?= Yii::t('order', 'Manual') ?>
-                    </a>
-                </li>
-                <li class="<?= Order::ruleFilter('mode') === Order::MODE_AUTO ? 'active' : '' ?>">
-                    <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => '1'])) ?>">
-                        <?= Yii::t('order', 'Auto') ?>
-                    </a>
-                </li>
+                <?php foreach (Order::MODES as $modeId => $modeName): ?>
+                    <li class="<?= Order::ruleFilter('mode') === $modeId ? 'active' : '' ?>">
+                        <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => $modeId])) ?>">
+                            <?= Yii::t('order', $modeName) ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </th>
