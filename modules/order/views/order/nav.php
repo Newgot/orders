@@ -24,7 +24,7 @@ use yii\helpers\Url;
     <li class="pull-right custom-search">
         <form
                 class="form-inline"
-                action="<?= Url::to(OrderUrlHelper::unset('index', ['search', 'search-type'])) ?>"
+                action="<?= Url::to(OrderUrlHelper::unset('index', ['search', 'search_type'])) ?>"
                 method="get"
         >
             <div class="input-group">
@@ -36,7 +36,7 @@ use yii\helpers\Url;
                         placeholder="Search orders"
                 >
                 <span class="input-group-btn search-select-wrap">
-            <select class="form-control search-select" name="search-type">
+            <select class="form-control search-select" name="search_type">
                 <?php foreach (Order::SEARCHES as $searchId => $searchName): ?>
                     <option
                             value="<?= $searchId ?>"
@@ -53,3 +53,8 @@ use yii\helpers\Url;
         </form>
     </li>
 </ul>
+
+<?php foreach (Yii::$app->params['error'] as $error): ?>
+
+        <p class="text-danger"><?=$error[0]?></p>
+<?php endforeach; ?>

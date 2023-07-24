@@ -111,23 +111,6 @@ class Order extends ActiveRecord
     }
 
     /**
-     * get all filter rules from the order in the queryParam
-     * @return array
-     */
-    public static function rulesFilter(): array
-    {
-        $params = Yii::$app->request->queryParams;
-        $rules = [];
-
-        foreach ($params as $keyParam => $param) {
-            if (in_array($keyParam, self::FILTER_NAMES)) {
-                $rules[$keyParam] = $param;
-            }
-        }
-        return $rules;
-    }
-
-    /**
      * get rule value if exist
      * @param string $key
      * @return string

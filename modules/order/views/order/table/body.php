@@ -2,7 +2,6 @@
 
 /** @var array $orders */
 /** @var array $services */
-
 ?>
 
 <tbody>

@@ -10,6 +10,22 @@ use yii\db\ActiveQuery;
  */
 class OrderSearch extends Order
 {
+    public $search;
+    public $search_type;
+
+    public const FILTER_NAMES = ['service_id', 'mode', 'status'];
+    public function rules(): array
+    {
+        $params = Yii::$app->request->queryParams;
+        return [
+            ['mode', 'integer', 'max' => 1],
+            ['status', 'integer', 'max' => 4],
+            ['service_id', 'integer'],
+            ['search', 'required', 'when' => fn($model) => $model->search_type !== ''],
+            ['search_type', 'required', 'when' => fn($model) => $model->search !== ''],
+
+        ];
+    }
 
     /**
      * search for get params
@@ -17,10 +33,16 @@ class OrderSearch extends Order
      */
     public static function search(): ActiveQuery
     {
-        $params = Yii::$app->request->queryParams;
-        if (!empty($params['search-type']) && !empty($params['search'])) {
-            $searchType = $params['search-type'];
-            $search = trim($params['search']);
+        $model = (new self);
+        $model->attributes = Yii::$app->request->queryParams;
+        if (!$model->validate()) {
+            Yii::$app->params['error'] = $model->errors;
+            return self::scopeAll();
+        }
+            $params = Yii::$app->request->queryParams;
+        if (!empty($params['search_type']) && !empty($params['search'])) {
+            $searchType = $params['search_type'];
+            $search = ($params['search']);
             if ($searchType === self::SEARCH_NAME) {
                 return self::scopeAll()->andWhere(
                     'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $search . '%"'
@@ -31,7 +53,24 @@ class OrderSearch extends Order
                 return  self::scopeAll()->andWhere(['LIKE', Order::TABLE . '.link', $search]);
             }
         }
-        return self::scopeAll()->filterWhere(Order::rulesFilter());
+        return self::scopeAll()->filterWhere(self::getRulesFilter());
     }
 
+
+    /**
+     * get all filter rules from the order in the queryParam
+     * @return array
+     */
+    protected static function getRulesFilter(): array
+    {
+        $params = Yii::$app->request->queryParams;
+        $rules = [];
+
+        foreach ($params as $keyParam => $param) {
+            if (in_array($keyParam, self::FILTER_NAMES)) {
+                $rules[$keyParam] = $param;
+            }
+        }
+        return $rules;
+    }
 }
