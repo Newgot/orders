@@ -6,6 +6,9 @@ use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
+/**
+ * Order model
+ */
 class Order extends ActiveRecord
 {
     public const TABLE = 'orders';

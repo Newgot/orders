@@ -3,11 +3,13 @@
 namespace app\modules\order\controllers;
 
 use app\modules\order\helpers\OrderUrlHelper;
-use app\modules\order\models\Order;
 use app\modules\order\Services\OrderService;
 use Yii;
 use yii\web\Controller;
 
+/**
+ * Base controller order module
+ */
 class OrderController extends Controller
 {
     protected ?OrderService $service = null;

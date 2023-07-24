@@ -9,6 +9,9 @@ namespace app\modules\order\assets;
 
 use yii\web\AssetBundle;
 
+/**
+ * add assets
+ */
 class OrderAsset extends AssetBundle
 {
     public $sourcePath = '@app/modules/order/web';

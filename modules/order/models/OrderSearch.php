@@ -4,6 +4,10 @@ namespace app\modules\order\models;
 
 use Yii;
 use yii\db\ActiveQuery;
+
+/**
+ * Order search model
+ */
 class OrderSearch extends Order
 {
 

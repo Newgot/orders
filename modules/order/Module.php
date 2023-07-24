@@ -4,9 +4,13 @@ namespace app\modules\order;
 use Yii;
 use yii\i18n\PhpMessageSource;
 
+/**
+ * initial order module
+ */
 class Module extends \yii\base\Module
 {
     const TITLE = 'Order';
+
     public function init() {
         parent::init();
         $this->layout = 'main';

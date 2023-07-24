@@ -4,6 +4,9 @@ namespace app\modules\order\helpers;
 
 use Yii;
 
+/**
+ * helper to generate url in order module
+ */
 class OrderUrlHelper
 {
     public static function set(string $route, array $newParams): array

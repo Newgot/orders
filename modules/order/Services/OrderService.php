@@ -9,6 +9,9 @@ use Yii;
 use yii\data\Pagination;
 use yii\db\Query;
 
+/**
+ * Business-logic order module
+ */
 class OrderService
 {
     protected const PAGINATION_LIMIT = 100;
