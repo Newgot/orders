@@ -32,23 +32,14 @@ use yii\helpers\Url;
                 >
                 <span class="input-group-btn search-select-wrap">
             <select class="form-control search-select" name="search-type">
-              <option
-                      value="1"
-                  <?= $queryParams['searchType'] === Order::SEARCH_ID ? 'selected=""' : '' ?>
-              >
-                  <?= Yii::t('order', 'Order ID') ?>
-              </option>
-              <option
-                      value="2"
-              <?= $queryParams['searchType'] === Order::SEARCH_LINK ? 'selected=""' : '' ?>
-              >
-                  <?= Yii::t('order', 'Link') ?>
-              </option>
-              <option value="3"
-              <?= $queryParams['searchType'] === Order::SEARCH_NAME ? 'selected=""' : '' ?>
-              >
-                  <?= Yii::t('order', 'Username') ?>
-              </option>
+                <?php foreach (Order::SEARCHES as $searchId => $searchName): ?>
+                    <option
+                            value="<?= $searchId ?>"
+                      <?= $queryParams['searchType'] === (string)$searchId ? 'selected=""' : '' ?>
+                  ><?= $queryParams['searchType'] === $searchId ?>
+                        <?= Yii::t('order', $searchName) ?>
+                  </option>
+                <?php endforeach; ?>
             </select>
             <button type="submit" class="btn btn-default">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>

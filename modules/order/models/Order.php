@@ -13,6 +13,11 @@ class Order extends ActiveRecord
     public const SEARCH_ID = '1';
     public const SEARCH_LINK = '2';
     public const SEARCH_NAME = '3';
+    public const SEARCHES = [
+        self::SEARCH_ID => 'Order Id',
+        self::SEARCH_LINK => 'Link',
+        self::SEARCH_NAME => 'Username',
+    ];
     public const SERVICES_ALL = '';
     public const MODE_ALL = '';
     public const MODES = [
