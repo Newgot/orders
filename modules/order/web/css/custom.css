@@ -2032,7 +2032,7 @@ input[type="checkbox"].selectOrder{
 }
 .sort-off:after{
   position: absolute;
-  font-family: 'Glyphicons Halflings';
+  font-family: 'Glyphicons Halflings', serif;
   font-style: normal;
   content: "\e155";
   right: -17px;
@@ -2043,7 +2043,7 @@ input[type="checkbox"].selectOrder{
 }
 .sort-on:after{
   position: absolute;
-  font-family: 'Glyphicons Halflings';
+  font-family: 'Glyphicons Halflings', serif;
   font-style: normal;
   content: "\e156";
   right: -17px;
@@ -2165,7 +2165,7 @@ input[type="checkbox"].selectOrder{
 }
 
 .twig-editor-list{
-  padding:0px;
+  padding:0;
   margin: 0;
 }
 .twig-editor-list .active a{
@@ -2352,7 +2352,7 @@ input[type="checkbox"].selectOrder{
   content: "\e252";
   position: absolute;
   display: inline-block;
-  font-family: 'Glyphicons Halflings';
+  font-family: 'Glyphicons Halflings', serif;
   font-style: normal;
   font-weight: 400;
   font-size: 10px;
