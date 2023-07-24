@@ -5,6 +5,8 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'defaultRoute' => 'order/order/index',
+
     'basePath' => dirname(__DIR__),
     'language' => 'en',
     'sourceLanguage' => 'en',
@@ -26,7 +28,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'order/error',
         ],
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
