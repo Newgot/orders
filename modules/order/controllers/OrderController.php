@@ -6,6 +6,7 @@ use app\modules\order\helpers\OrderUrlHelper;
 use app\modules\order\services\OrderService;
 use Yii;
 use yii\web\Controller;
+use yii\web\Response;
 
 /**
  * Base controller order module
@@ -23,10 +24,14 @@ class OrderController extends Controller
     /**
      * render main page
      * @param int $page
-     * @return string
+     * @return Response | string
      */
-    public function actionIndex(int $page = 1): string
+    public function actionIndex(int $page = 1)
     {
+        if (Yii::$app->request->url === '/') {
+            return $this->redirect(['order/index']);
+        }
+
         $pagination = $this->service->getPagination();
         $orders = $this->service->getOrders($pagination->offset);
         $pageCount = $this->service->getPageCounts($page);
