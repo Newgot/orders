@@ -102,7 +102,7 @@ class OrderService
             /** @var Order $order */
             $created = date('Y-m-d H:i:s');
             $file .= "$order->id, $order->name, $order->link, $order->quantity, ";
-            $file .= "{$order->service->name}, $order->statusName, $order->modeName, $created" . PHP_EOL;
+            $file .= "{$order->serviceOrder->name}, $order->statusName, $order->modeName, $created" . PHP_EOL;
         }
         return $file;
     }

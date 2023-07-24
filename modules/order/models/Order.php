@@ -73,7 +73,7 @@ class Order extends ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
-    public function getService(): ActiveQuery
+    public function getServiceOrder(): ActiveQuery
     {
         return $this->hasOne(Service::class, ['id' => 'service_id']);
     }
@@ -118,7 +118,7 @@ class Order extends ActiveRecord
             ->joinWith(['user' => function ($query) {
                 $query->from(User::TABLE);
             }])
-            ->joinWith(['service' => function ($query) {
+            ->joinWith(['serviceOrder' => function ($query) {
                 $query->from(Service::TABLE);
             }]);
     }

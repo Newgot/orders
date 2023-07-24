@@ -13,8 +13,8 @@
         <td class="link"><?= $order->link ?></td>
         <td><?= $order->quantity ?></td>
         <td class="service">
-            <span class="label-id"><?= $services[$order->service->id]['cnt'] ?></span>
-            <?= $order->service->name ?>
+            <span class="label-id"><?= $services[$order->serviceOrder->id]['cnt'] ?></span>
+            <?= $order->serviceOrder->name ?>
         </td>
         <td><?= $order->statusName ?></td>
         <td><?= $order->modeName ?></td>
