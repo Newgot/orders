@@ -11,8 +11,7 @@ use yii\web\AssetBundle;
 
 class OrderAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $sourcePath = '@app/modules/order/web';
     public $css = [
         'css/bootstrap.min.css',
         'css/custom.css',
