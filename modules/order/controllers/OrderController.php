@@ -13,6 +13,7 @@ use yii\web\Response;
  */
 class OrderController extends Controller
 {
+    protected const HOME_URL = '/';
     protected ?OrderService $service = null;
 
     public function __construct($id, $module, $config = [])
@@ -28,7 +29,7 @@ class OrderController extends Controller
      */
     public function actionIndex(int $page = 1)
     {
-        if (Yii::$app->request->url === '/') {
+        if (Yii::$app->request->url === self::HOME_URL) {
             return $this->redirect(['order/index']);
         }
 
