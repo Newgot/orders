@@ -53,8 +53,9 @@ use yii\helpers\Url;
         </form>
     </li>
 </ul>
+<?php if (!empty(Yii::$app->params['error'])): ?>
+    <?php foreach (Yii::$app->params['error'] as $error): ?>
+        <p class="text-danger"><?= $error[0] ?></p>
+    <?php endforeach; ?>
+<?php endif; ?>
 
-<?php foreach (Yii::$app->params['error'] as $error): ?>
-
-        <p class="text-danger"><?=$error[0]?></p>
-<?php endforeach; ?>

@@ -21,9 +21,8 @@ class OrderSearch extends Order
             ['mode', 'integer', 'max' => 1],
             ['status', 'integer', 'max' => 4],
             ['service_id', 'integer'],
-            ['search', 'required', 'when' => fn($model) => $model->search_type !== ''],
-            ['search_type', 'required', 'when' => fn($model) => $model->search !== ''],
-
+            ['search', 'required', 'when' => fn($model) => !empty($model->search_type)],
+            ['search_type', 'required', 'when' => fn($model) => !empty($model->search)],
         ];
     }
 
