@@ -22,7 +22,7 @@ use yii\helpers\Url;
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="<?= Order::ruleFilter('service_id') === '' ? 'active' : '' ?>">
+                <li class="<?= Order::ruleFilter('service_id') === Order::SERVICES_ALL ? 'active' : '' ?>">
                     <a href="<?= Url::to(OrderUrlHelper::unset('index', ['service_id'])); ?>">
                         <?= Yii::t('order', 'All') ?> (<?= $countServices ?>)
                     </a>
@@ -47,17 +47,17 @@ use yii\helpers\Url;
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="<?= Order::ruleFilter('mode') === '' ? 'active' : '' ?>">
+                <li class="<?= Order::ruleFilter('mode') === Order::MODE_ALL ? 'active' : '' ?>">
                     <a href="<?= Url::to(OrderUrlHelper::unset('index', ['mode'])) ?>">
                         <?= Yii::t('order', 'All') ?>
                     </a>
                 </li>
-                <li class="<?= Order::ruleFilter('mode') === '0' ? 'active' : '' ?>">
+                <li class="<?= Order::ruleFilter('mode') === Order::MODE_MANUAL ? 'active' : '' ?>">
                     <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => '0'])) ?>">
                         <?= Yii::t('order', 'Manual') ?>
                     </a>
                 </li>
-                <li class="<?= Order::ruleFilter('mode') === '1' ? 'active' : '' ?>">
+                <li class="<?= Order::ruleFilter('mode') === Order::MODE_AUTO ? 'active' : '' ?>">
                     <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => '1'])) ?>">
                         <?= Yii::t('order', 'Auto') ?>
                     </a>
