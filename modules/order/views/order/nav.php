@@ -8,6 +8,11 @@ use yii\helpers\Url;
 ?>
 
 <ul class="nav nav-tabs p-b">
+    <li class="<?= Order::ruleFilter('status') === '' ? 'active' : '' ?>">
+        <a href="<?= Url::to(['index']) ?>">
+            <?= Yii::t('order', 'All orders') ?>
+        </a>
+    </li>
     <?php foreach (Order::STATUSES as $statusId => $statusName): ?>
         <li class="<?= Order::ruleFilter('status') === $statusId ? 'active' : '' ?>">
             <a href="<?= Url::to(['index', 'status' => $statusId]) ?>">

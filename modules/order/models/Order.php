@@ -28,7 +28,6 @@ class Order extends ActiveRecord
         '1' => 'Auto'
     ];
     public const STATUSES = [
-        '' => 'All orders',
         '0' => 'Pending',
         '1' => 'In progress',
         '2' => 'Completed',
