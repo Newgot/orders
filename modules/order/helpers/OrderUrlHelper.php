@@ -21,7 +21,7 @@ class OrderUrlHelper
         $res[0] = $route;
         foreach ($params as $key => $param) {
             if (!in_array($key, $paramNames)) {
-                $res[$key] = $param;
+                $res[$key] = trim($param);
             }
         }
         return $res;

@@ -20,7 +20,7 @@ class OrderSearch extends Order
         $params = Yii::$app->request->queryParams;
         if (!empty($params['search-type']) && !empty($params['search'])) {
             $searchType = $params['search-type'];
-            $search = $params['search'];
+            $search = trim($params['search']);
             if ($searchType === self::SEARCH_NAME) {
                 return self::scopeAll()->andWhere(
                     'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $search . '%"'

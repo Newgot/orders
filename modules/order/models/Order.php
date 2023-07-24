@@ -99,6 +99,18 @@ class Order extends ActiveRecord
     }
 
     /**
+     * @param int $offset
+     * @param int $limit
+     * @return ActiveQuery
+     */
+    public static function getOrders(int $offset, int $limit): ActiveQuery
+    {
+        return OrderSearch::search()
+            ->offset($offset)
+            ->limit($limit);
+    }
+
+    /**
      * get all filter rules from the order in the queryParam
      * @return array
      */

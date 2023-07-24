@@ -32,7 +32,7 @@ use yii\helpers\Url;
                         type="text"
                         name="search"
                         class="form-control"
-                        value="<?= $queryParams['search'] ?>"
+                        value="<?= trim($queryParams['search']) ?>"
                         placeholder="Search orders"
                 >
                 <span class="input-group-btn search-select-wrap">

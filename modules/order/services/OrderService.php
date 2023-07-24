@@ -7,7 +7,6 @@ use app\modules\order\models\OrderSearch;
 use app\modules\order\models\Service;
 use Yii;
 use yii\data\Pagination;
-use yii\db\Query;
 
 /**
  * Business-logic order module
@@ -23,9 +22,7 @@ class OrderService
      */
     public function getOrders(int $offset = 0): array
     {
-        return OrderSearch::search()
-            ->offset($offset)
-            ->limit(self::PAGINATION_LIMIT)
+        return Order::getOrders($offset, self::PAGINATION_LIMIT)
             ->all();
     }
 
@@ -46,18 +43,9 @@ class OrderService
      * get service's list
      * @return array
      */
-    public function getServices(): array
+    public function getServiceOrders(): array
     {
-        $services = (new Query())
-            ->from(Service::TABLE)
-            ->select([
-                Service::TABLE . '.id',
-                Service::TABLE . '.name',
-                'COUNT(*) as cnt'
-            ])
-            ->leftJoin(Order::TABLE, Service::TABLE . '.id = ' . Order::TABLE . '.service_id')
-            ->groupBy(Service::TABLE . '.id')
-            ->all();
+        $services = Service::getAllServices()->all();
         $res = [];
         foreach ($services as $service) {
             $res[$service['id']] = $service;
