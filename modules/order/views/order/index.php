@@ -19,8 +19,8 @@ $this->title = Module::TITLE
 
 <div class="container-fluid">
     <?= $this->render('nav', [
-            'queryParams' => $queryParams,
-            'errors' => $errors,
+        'queryParams' => $queryParams,
+        'errors' => $errors,
     ]) ?>
     <table class="table order-table">
         <?= $this->render('table/head', [

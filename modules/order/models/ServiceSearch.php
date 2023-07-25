@@ -9,6 +9,9 @@ use yii\db\Query;
  */
 class ServiceSearch extends Service
 {
+    /**
+     * @return Query
+     */
     public static function getAllServices(): Query
     {
         return (new Query())

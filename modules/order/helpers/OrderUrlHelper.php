@@ -9,12 +9,24 @@ use Yii;
  */
 class OrderUrlHelper
 {
+    /**
+     * set param to route array
+     * @param string $route
+     * @param array $newParams
+     * @return array
+     */
     public static function set(string $route, array $newParams): array
     {
         $oldParams = Yii::$app->request->queryParams;
         return array_merge([$route], $oldParams, $newParams);
     }
 
+    /**
+     * unset param to route array
+     * @param string $route
+     * @param array $paramNames
+     * @return array
+     */
     public static function unset(string $route, array $paramNames): array
     {
         $params = Yii::$app->request->queryParams;
@@ -27,10 +39,13 @@ class OrderUrlHelper
         return $res;
     }
 
+    /**
+     * @return void
+     */
     public static function setCSVHeader(): void
     {
         header('Content-type: text/csv');
-        header('Content-Disposition: attachment; filename="exported_(' . date('H-i_d.m.Y') .').csv"');
+        header('Content-Disposition: attachment; filename="exported_(' . date('H-i_d.m.Y') . ').csv"');
         header('Content-Transfer-Encoding: binary');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');

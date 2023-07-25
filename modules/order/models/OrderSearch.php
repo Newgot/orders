@@ -15,6 +15,10 @@ class OrderSearch extends Order
     protected array $queryParams = [];
 
     public const FILTER_NAMES = ['service_id', 'mode', 'status'];
+
+    /**
+     * @return array
+     */
     public function rules(): array
     {
         return [
@@ -45,9 +49,9 @@ class OrderSearch extends Order
                     'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $search . '%"'
                 );
             } elseif ($searchType === self::SEARCH_ID) {
-                return  $this->scopeAll()->andWhere(['LIKE', Order::TABLE . '.id', $search]);
+                return $this->scopeAll()->andWhere(['LIKE', Order::TABLE . '.id', $search]);
             } elseif ($searchType === self::SEARCH_LINK) {
-                return  $this->scopeAll()->andWhere(['LIKE', Order::TABLE . '.link', $search]);
+                return $this->scopeAll()->andWhere(['LIKE', Order::TABLE . '.link', $search]);
             }
         }
         return $this->scopeAll()->filterWhere($this->getRulesFilter());

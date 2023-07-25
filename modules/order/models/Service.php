@@ -17,9 +17,6 @@ class Service extends ActiveRecord
      */
     public static function tableName(): string
     {
-        return '{{'. self::TABLE .'}}';
+        return '{{' . self::TABLE . '}}';
     }
-
-
-
 }

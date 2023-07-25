@@ -82,6 +82,7 @@ class OrderService
     {
         return $this->model->getErrors();
     }
+
     /**
      * get first, last and number of orders  per page
      * @param int $page
@@ -107,6 +108,7 @@ class OrderService
             'searchType' => Yii::$app->request->queryParams['search_type'] ?? '',
         ];
     }
+
     /**
      * get csv file
      * @return string
