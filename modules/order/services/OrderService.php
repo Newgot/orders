@@ -14,6 +14,13 @@ use yii\data\Pagination;
 class OrderService
 {
     protected const PAGINATION_LIMIT = 100;
+    protected OrderSearch $model;
+
+    public function __construct()
+    {
+        $this->model = new OrderSearch();
+        $this->model->setQueryParams(Yii::$app->request->get());
+    }
 
     /**
      * get order list
@@ -22,10 +29,15 @@ class OrderService
      */
     public function getOrders(int $offset = 0): array
     {
-        return OrderSearch::search()
+        $orders =  $this->model->search()
             ->offset($offset)
             ->limit(self::PAGINATION_LIMIT)
             ->all();
+        $errors = $this->model->getErrors();
+        return [
+            'orders' => $orders,
+            'errors' => $errors
+        ];
     }
 
     /**
@@ -34,7 +46,7 @@ class OrderService
      */
     public function getPagination(): Pagination
     {
-        $count = OrderSearch::search()->count();
+        $count = $this->model->search()->count();
         return new Pagination([
             'pageSize' => self::PAGINATION_LIMIT,
             'totalCount' => $count,
@@ -75,7 +87,7 @@ class OrderService
     public function getPageCounts(int $page): array
     {
         return [
-            'all' => OrderSearch::search()->count(),
+            'all' => $this->model->search()->count(),
             'start' => self::PAGINATION_LIMIT * ($page - 1) + 1,
             'end' => self::PAGINATION_LIMIT * $page,
         ];
@@ -88,7 +100,7 @@ class OrderService
     public function csv(): string
     {
         $file = $this->getCSVHead();
-        foreach (OrderSearch::search()->all() as $order) {
+        foreach ($this->model->search()->all() as $order) {
             /** @var Order $order */
             $created = date('Y-m-d H:i:s');
             $file .= "$order->id, $order->name, $order->link, $order->quantity, ";

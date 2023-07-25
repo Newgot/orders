@@ -7,6 +7,7 @@ use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var array $orders */
+/** @var array $errors */
 /** @var array $services */
 /** @var int $countServices */
 /** @var Pagination $pagination */
@@ -17,7 +18,10 @@ $this->title = Module::TITLE
 ?>
 
 <div class="container-fluid">
-    <?= $this->render('nav', ['queryParams' => $queryParams]) ?>
+    <?= $this->render('nav', [
+            'queryParams' => $queryParams,
+            'errors' => $errors,
+    ]) ?>
     <table class="table order-table">
         <?= $this->render('table/head', [
             'services' => $services,

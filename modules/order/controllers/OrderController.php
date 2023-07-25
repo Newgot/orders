@@ -34,12 +34,16 @@ class OrderController extends Controller
         }
 
         $pagination = $this->service->getPagination();
-        $orders = $this->service->getOrders($pagination->offset);
+        [
+            'orders' => $orders,
+            'errors' => $errors
+        ] = $this->service->getOrders($pagination->offset);
         $pageCount = $this->service->getPageCounts($page);
         $services = $this->service->getServiceOrders();
         $countServices = $this->service->countService($services);
         return $this->render('index', [
             'orders' => $orders,
+            'errors' => $errors,
             'services' => $services,
             'countServices' => $countServices,
             'pagination' => $pagination,

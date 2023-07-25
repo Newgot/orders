@@ -12,6 +12,8 @@ class OrderSearch extends Order
 {
     public $search;
     public $search_type;
+    protected array $queryParams = [];
+
     public const FILTER_NAMES = ['service_id', 'mode', 'status'];
     public function rules(): array
     {
@@ -28,15 +30,13 @@ class OrderSearch extends Order
      * search for get params
      * @return ActiveQuery
      */
-    public static function search(): ActiveQuery
+    public function search(): ActiveQuery
     {
-        $model = (new self);
-        $model->load(Yii::$app->request->get(), '');
-        if (!$model->validate()) {
-            Yii::$app->params['error'] = $model->getErrors();
+        $params = $this->getQueryParams();
+        $this->load($this->getQueryParams(), '');
+        if (!$this->validate()) {
             return self::scopeAll();
         }
-            $params = Yii::$app->request->queryParams;
         if (!empty($params['search_type']) && !empty($params['search'])) {
             $searchType = $params['search_type'];
             $search = ($params['search']);
@@ -69,5 +69,21 @@ class OrderSearch extends Order
             }
         }
         return $rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueryParams(): array
+    {
+        return $this->queryParams;
+    }
+
+    /**
+     * @param array $queryParams
+     */
+    public function setQueryParams(array $queryParams): void
+    {
+        $this->queryParams = $queryParams;
     }
 }
