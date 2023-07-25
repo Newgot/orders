@@ -22,7 +22,9 @@ class OrderService
      */
     public function getOrders(int $offset = 0): array
     {
-        return Order::getOrders($offset, self::PAGINATION_LIMIT)
+        return OrderSearch::search()
+            ->offset($offset)
+            ->limit(self::PAGINATION_LIMIT)
             ->all();
     }
 
