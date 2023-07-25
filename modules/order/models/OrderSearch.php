@@ -51,7 +51,7 @@ class OrderSearch extends Model
         }
         if (!empty($params['search_type']) && !empty($params['search'])) {
             $searchType = $params['search_type'];
-            $search = ($params['search']);
+            $search = trim($params['search']);
             if ($searchType === Order::SEARCH_NAME) {
                 return Order::scopeAll()->andWhere(
                     'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $search . '%"'
