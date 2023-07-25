@@ -4,7 +4,7 @@ namespace app\modules\order\services;
 
 use app\modules\order\models\Order;
 use app\modules\order\models\OrderSearch;
-use app\modules\order\models\Service;
+use app\modules\order\models\ServiceSearch;
 use Yii;
 use yii\data\Pagination;
 
@@ -47,7 +47,7 @@ class OrderService
      */
     public function getServiceOrders(): array
     {
-        $services = Service::getAllServices()->all();
+        $services = ServiceSearch::getAllServices()->all();
         $res = [];
         foreach ($services as $service) {
             $res[$service['id']] = $service;

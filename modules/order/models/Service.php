@@ -20,17 +20,6 @@ class Service extends ActiveRecord
         return '{{'. self::TABLE .'}}';
     }
 
-    public static function getAllServices(): Query
-    {
-        return (new Query())
-            ->from(Service::TABLE)
-            ->select([
-                Service::TABLE . '.id',
-                Service::TABLE . '.name',
-                'COUNT(*) as cnt'
-            ])
-            ->leftJoin(Order::TABLE, Service::TABLE . '.id = ' . Order::TABLE . '.service_id')
-            ->groupBy(Service::TABLE . '.id');
-    }
+
 
 }
