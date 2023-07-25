@@ -30,7 +30,7 @@ class OrderController extends Controller
     public function actionIndex(int $page = 1)
     {
         if (Yii::$app->request->url === self::HOME_URL) {
-            return $this->redirect(['order/index']);
+            return $this->redirect(['order/']);
         }
 
         $pagination = $this->service->getPagination();
