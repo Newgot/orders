@@ -99,37 +99,12 @@ class Order extends ActiveRecord
     }
 
     /**
-     * @param int $offset
-     * @param int $limit
-     * @return ActiveQuery
-     */
-    public static function getOrders(int $offset, int $limit): ActiveQuery
-    {
-        return OrderSearch::search()
-            ->offset($offset)
-            ->limit($limit);
-    }
-
-    /**
-     * get rule value if exist
-     * @param string $key
-     * @return string
-     */
-    public static function ruleFilter(string $key): string
-    {
-        $params = Yii::$app->request->queryParams;
-        return array_key_exists($key, $params) && in_array($key, self::FILTER_NAMES)
-            ? $params[$key]
-            : '';
-    }
-
-    /**
      * generate sql from orders table jons users and services table
      * @return ActiveQuery
      */
-    public static function scopeAll(): ActiveQuery
+    protected function scopeAll(): ActiveQuery
     {
-        return self::scopeOrdersQuery()
+        return $this->scopeOrdersQuery()
             ->joinWith(['user' => function ($query) {
                 $query->from(User::TABLE);
             }])
@@ -142,7 +117,7 @@ class Order extends ActiveRecord
      * generate sql from orders table
      * @return ActiveQuery
      */
-    protected static function scopeOrdersQuery(): ActiveQuery
+    protected function scopeOrdersQuery(): ActiveQuery
     {
         return Order::find()
             ->select([

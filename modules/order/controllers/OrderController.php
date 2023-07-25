@@ -34,10 +34,8 @@ class OrderController extends Controller
         }
 
         $pagination = $this->service->getPagination();
-        [
-            'orders' => $orders,
-            'errors' => $errors
-        ] = $this->service->getOrders($pagination->offset);
+        $orders = $this->service->getOrders($pagination->offset);
+        $errors = $this->service->getErrors();
         $pageCount = $this->service->getPageCounts($page);
         $services = $this->service->getServiceOrders();
         $countServices = $this->service->countService($services);
@@ -50,7 +48,7 @@ class OrderController extends Controller
             'pageCount' => $pageCount,
             'queryParams' => [
                 'search' => Yii::$app->request->queryParams['search'] ?? '',
-                'searchType' => Yii::$app->request->queryParams['search-type'] ?? '',
+                'searchType' => Yii::$app->request->queryParams['search_type'] ?? '',
             ],
         ]);
     }

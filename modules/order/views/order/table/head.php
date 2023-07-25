@@ -22,13 +22,13 @@ use yii\helpers\Url;
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="<?= Order::ruleFilter('service_id') === Order::SERVICES_ALL ? 'active' : '' ?>">
+                <li class="<?= OrderUrlHelper::ruleFilter('service_id', Order::FILTER_NAMES) === Order::SERVICES_ALL ? 'active' : '' ?>">
                     <a href="<?= Url::to(OrderUrlHelper::unset('index', ['service_id'])); ?>">
                         <?= Yii::t('order', 'All') ?> (<?= $countServices ?>)
                     </a>
                 </li>
                 <?php foreach ($services as $service): ?>
-                    <li class="<?= Order::ruleFilter('service_id') === $service['id'] ? 'active' : '' ?>">
+                    <li class="<?= OrderUrlHelper::ruleFilter('service_id', Order::FILTER_NAMES) === $service['id'] ? 'active' : '' ?>">
                         <a href="<?= Url::to(OrderUrlHelper::set('index', ['service_id' => $service['id']]), true) ?>">
                             <span class="label-id"><?= $service['cnt'] ?></span>
                             <?= $service['name'] ?>
@@ -47,13 +47,13 @@ use yii\helpers\Url;
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li class="<?= Order::ruleFilter('mode') === Order::MODE_ALL ? 'active' : '' ?>">
+                <li class="<?= OrderUrlHelper::ruleFilter('mode', Order::FILTER_NAMES) === Order::MODE_ALL ? 'active' : '' ?>">
                     <a href="<?= Url::to(OrderUrlHelper::unset('index', ['mode'])) ?>">
                         <?= Yii::t('order', 'All') ?>
                     </a>
                 </li>
                 <?php foreach (Order::MODES as $modeId => $modeName): ?>
-                    <li class="<?= Order::ruleFilter('mode') === $modeId ? 'active' : '' ?>">
+                    <li class="<?= OrderUrlHelper::ruleFilter('mode', Order::FILTER_NAMES) === $modeId ? 'active' : '' ?>">
                         <a href="<?= Url::to(OrderUrlHelper::set('index', ['mode' => $modeId])) ?>">
                             <?= Yii::t('order', $modeName) ?>
                         </a>

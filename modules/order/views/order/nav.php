@@ -9,19 +9,18 @@ use yii\helpers\Url;
 ?>
 
 <ul class="nav nav-tabs p-b">
-    <li class="<?= Order::ruleFilter('status') === '' ? 'active' : '' ?>">
+    <li class="<?= OrderUrlHelper::ruleFilter('status', Order::FILTER_NAMES) === '' ? 'active' : '' ?>">
         <a href="<?= Url::to(['index']) ?>">
             <?= Yii::t('order', 'All orders') ?>
         </a>
     </li>
     <?php foreach (Order::STATUSES as $statusId => $statusName): ?>
-        <li class="<?= Order::ruleFilter('status') === (string)$statusId ? 'active' : '' ?>">
+        <li class="<?= OrderUrlHelper::ruleFilter('status', Order::FILTER_NAMES) === (string)$statusId ? 'active' : '' ?>">
             <a href="<?= Url::to(['index', 'status' => $statusId]) ?>">
                 <?= Yii::t('order', $statusName) ?>
             </a>
         </li>
     <?php endforeach; ?>
-
     <li class="pull-right custom-search">
         <form
                 class="form-inline"
@@ -37,6 +36,7 @@ use yii\helpers\Url;
                         placeholder="Search orders"
                 >
                 <span class="input-group-btn search-select-wrap">
+
             <select class="form-control search-select" name="search_type">
                 <?php foreach (Order::SEARCHES as $searchId => $searchName): ?>
                     <option

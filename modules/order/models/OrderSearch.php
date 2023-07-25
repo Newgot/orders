@@ -35,40 +35,22 @@ class OrderSearch extends Order
         $params = $this->getQueryParams();
         $this->load($this->getQueryParams(), '');
         if (!$this->validate()) {
-            return self::scopeAll();
+            return $this->scopeAll();
         }
         if (!empty($params['search_type']) && !empty($params['search'])) {
             $searchType = $params['search_type'];
             $search = ($params['search']);
             if ($searchType === self::SEARCH_NAME) {
-                return self::scopeAll()->andWhere(
+                return $this->scopeAll()->andWhere(
                     'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $search . '%"'
                 );
             } elseif ($searchType === self::SEARCH_ID) {
-                return  self::scopeAll()->andWhere(['LIKE', Order::TABLE . '.id', $search]);
+                return  $this->scopeAll()->andWhere(['LIKE', Order::TABLE . '.id', $search]);
             } elseif ($searchType === self::SEARCH_LINK) {
-                return  self::scopeAll()->andWhere(['LIKE', Order::TABLE . '.link', $search]);
+                return  $this->scopeAll()->andWhere(['LIKE', Order::TABLE . '.link', $search]);
             }
         }
-        return self::scopeAll()->filterWhere(self::getRulesFilter());
-    }
-
-
-    /**
-     * get all filter rules from the order in the queryParam
-     * @return array
-     */
-    protected static function getRulesFilter(): array
-    {
-        $params = Yii::$app->request->queryParams;
-        $rules = [];
-
-        foreach ($params as $keyParam => $param) {
-            if (in_array($keyParam, self::FILTER_NAMES)) {
-                $rules[$keyParam] = $param;
-            }
-        }
-        return $rules;
+        return $this->scopeAll()->filterWhere($this->getRulesFilter());
     }
 
     /**
@@ -85,5 +67,20 @@ class OrderSearch extends Order
     public function setQueryParams(array $queryParams): void
     {
         $this->queryParams = $queryParams;
+    }
+
+    /**
+     * get all filter rules from the order in the queryParam
+     * @return array
+     */
+    protected function getRulesFilter(): array
+    {
+        $rules = [];
+        foreach ($this->getQueryParams() as $keyParam => $param) {
+            if (in_array($keyParam, self::FILTER_NAMES)) {
+                $rules[$keyParam] = $param;
+            }
+        }
+        return $rules;
     }
 }

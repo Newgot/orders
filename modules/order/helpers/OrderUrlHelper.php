@@ -36,4 +36,18 @@ class OrderUrlHelper
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Content-Description: File Transfer');
     }
+
+    /**
+     * get rule value if exist
+     * @param string $key
+     * @param array $filters
+     * @return string
+     */
+    public static function ruleFilter(string $key, array $filters): string
+    {
+        $params = Yii::$app->request->queryParams;
+        return array_key_exists($key, $params) && in_array($key, $filters)
+            ? $params[$key]
+            : '';
+    }
 }

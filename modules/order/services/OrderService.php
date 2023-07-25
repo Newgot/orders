@@ -29,15 +29,10 @@ class OrderService
      */
     public function getOrders(int $offset = 0): array
     {
-        $orders =  $this->model->search()
+        return $this->model->search()
             ->offset($offset)
             ->limit(self::PAGINATION_LIMIT)
             ->all();
-        $errors = $this->model->getErrors();
-        return [
-            'orders' => $orders,
-            'errors' => $errors
-        ];
     }
 
     /**
@@ -79,6 +74,14 @@ class OrderService
         }, 0);
     }
 
+    /**
+     * get validate errors
+     * @return array
+     */
+    public function getErrors(): array
+    {
+        return $this->model->getErrors();
+    }
     /**
      * get first, last and number of orders  per page
      * @param int $page
