@@ -97,6 +97,17 @@ class OrderService
     }
 
     /**
+     * gut used query params
+     * @return array
+     */
+    public function getQueryParams(): array
+    {
+        return [
+            'search' => Yii::$app->request->queryParams['search'] ?? '',
+            'searchType' => Yii::$app->request->queryParams['search_type'] ?? '',
+        ];
+    }
+    /**
      * get csv file
      * @return string
      */

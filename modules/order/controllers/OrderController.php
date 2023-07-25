@@ -39,6 +39,7 @@ class OrderController extends Controller
         $pageCount = $this->service->getPageCounts($page);
         $services = $this->service->getServiceOrders();
         $countServices = $this->service->countService($services);
+        $queryParams = $this->service->getQueryParams();
         return $this->render('index', [
             'orders' => $orders,
             'errors' => $errors,
@@ -46,10 +47,7 @@ class OrderController extends Controller
             'countServices' => $countServices,
             'pagination' => $pagination,
             'pageCount' => $pageCount,
-            'queryParams' => [
-                'search' => Yii::$app->request->queryParams['search'] ?? '',
-                'searchType' => Yii::$app->request->queryParams['search_type'] ?? '',
-            ],
+            'queryParams' => $queryParams,
         ]);
     }
 
