@@ -7,6 +7,8 @@ use yii\db\Query;
 
 /**
  * Service model
+ * @property int $id
+ * @property string $name
  */
 class Service extends ActiveRecord
 {

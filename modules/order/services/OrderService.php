@@ -118,9 +118,9 @@ class OrderService
         $file = $this->getCSVHead();
         foreach ($this->model->search()->all() as $order) {
             /** @var Order $order */
-            $created = date('Y-m-d H:i:s');
             $file .= "$order->id, $order->name, $order->link, $order->quantity, ";
-            $file .= "{$order->serviceOrder->name}, $order->statusName, $order->modeName, $created" . PHP_EOL;
+            $file .= "{$order->serviceOrder->name}, $order->statusName, $order->modeName, ";
+            $file .= "{$order->createdDate['0']} {$order->createdDate['1']} " . PHP_EOL;
         }
         return $file;
     }

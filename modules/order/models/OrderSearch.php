@@ -3,15 +3,23 @@
 namespace app\modules\order\models;
 
 use Yii;
+use yii\base\Model;
 use yii\db\ActiveQuery;
 
 /**
  * Order search model
  */
-class OrderSearch extends Order
+class OrderSearch extends Model
 {
-    public $search;
-    public $search_type;
+    public ?string $name = null;
+    public ?int $quantity = null;
+    public ?string $mode = null;
+    public ?int $status = null;
+    public ?int $service_id = null;
+    public ?string $search = null;
+
+    public  int $search_type;
+
     protected array $queryParams = [];
 
     public const FILTER_NAMES = ['service_id', 'mode', 'status'];
@@ -22,8 +30,8 @@ class OrderSearch extends Order
     public function rules(): array
     {
         return [
-            ['mode', 'integer', 'max' => 1],
-            ['status', 'integer', 'max' => 4],
+            ['mode', 'validateMode'],
+            ['status', 'validateStatus'],
             ['service_id', 'integer'],
             ['search', 'required', 'when' => fn($model) => !empty($model->search_type)],
             ['search_type', 'required', 'when' => fn($model) => !empty($model->search)],
@@ -39,22 +47,22 @@ class OrderSearch extends Order
         $params = $this->getQueryParams();
         $this->load($this->getQueryParams(), '');
         if (!$this->validate()) {
-            return $this->scopeAll();
+            return Order::scopeAll();
         }
         if (!empty($params['search_type']) && !empty($params['search'])) {
             $searchType = $params['search_type'];
             $search = ($params['search']);
-            if ($searchType === self::SEARCH_NAME) {
-                return $this->scopeAll()->andWhere(
+            if ($searchType === Order::SEARCH_NAME) {
+                return Order::scopeAll()->andWhere(
                     'CONCAT(' . User::TABLE . '.first_name, " ", ' . User::TABLE . '.last_name) LIKE "%' . $search . '%"'
                 );
-            } elseif ($searchType === self::SEARCH_ID) {
-                return $this->scopeAll()->andWhere(['LIKE', Order::TABLE . '.id', $search]);
-            } elseif ($searchType === self::SEARCH_LINK) {
-                return $this->scopeAll()->andWhere(['LIKE', Order::TABLE . '.link', $search]);
+            } elseif ($searchType === Order::SEARCH_ID) {
+                return Order::scopeAll()->andWhere(['LIKE', Order::TABLE . '.id', $search]);
+            } elseif ($searchType === Order::SEARCH_LINK) {
+                return Order::scopeAll()->andWhere(['LIKE', Order::TABLE . '.link', $search]);
             }
         }
-        return $this->scopeAll()->filterWhere($this->getRulesFilter());
+        return Order::scopeAll()->filterWhere($this->getRulesFilter());
     }
 
     /**
@@ -71,6 +79,28 @@ class OrderSearch extends Order
     public function setQueryParams(array $queryParams): void
     {
         $this->queryParams = $queryParams;
+    }
+
+    /**
+     * @param $attribute
+     * @return void
+     */
+    public function  validateMode($attribute)
+    {
+        if (!in_array($this->$attribute, array_keys(Order::MODES))) {
+            $this->addError($attribute, Yii::t('order', 'Not valid mode'));
+        }
+    }
+
+    /**
+     * @param $attribute
+     * @return void
+     */
+    public function  validateStatus($attribute)
+    {
+        if (!in_array($this->$attribute, array_keys(Order::STATUSES))) {
+            $this->addError($attribute, Yii::t('order', 'Not valid status'));
+        }
     }
 
     /**

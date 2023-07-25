@@ -2,12 +2,19 @@
 
 namespace app\modules\order\models;
 
-use Yii;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
  * Order model
+ * @property int $id
+ * @property string $name
+ * @property string $link
+ * @property string $quantity
+ * @property string $serviceOrder
+ * @property string $statusName
+ * @property string $modeName,
+ * @property array $createdDate
  */
 class Order extends ActiveRecord
 {
@@ -102,9 +109,9 @@ class Order extends ActiveRecord
      * generate sql from orders table jons users and services table
      * @return ActiveQuery
      */
-    protected function scopeAll(): ActiveQuery
+    public static function scopeAll(): ActiveQuery
     {
-        return $this->scopeOrdersQuery()
+        return self::scopeOrdersQuery()
             ->joinWith(['user' => function ($query) {
                 $query->from(User::TABLE);
             }])
@@ -117,9 +124,9 @@ class Order extends ActiveRecord
      * generate sql from orders table
      * @return ActiveQuery
      */
-    protected function scopeOrdersQuery(): ActiveQuery
+    protected static function scopeOrdersQuery(): ActiveQuery
     {
-        return Order::find()
+        return self::find()
             ->select([
                 Order::TABLE . '.*',
                 User::TABLE . '.first_name',

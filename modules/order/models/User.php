@@ -6,6 +6,9 @@ use yii\db\ActiveRecord;
 
 /**
  * User model
+ * @property int $id
+ * @property string $first_name
+ * @property string $last_name
  */
 class User extends ActiveRecord
 {
