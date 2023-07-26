@@ -1,4 +1,6 @@
-
+.search-select-wrap .btn {
+  height: 34px;
+}
 body {
   padding-top: 65px;
   padding-bottom: 30px;
