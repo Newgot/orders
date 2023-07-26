@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\order\controllers;
+namespace order\controllers;
 
 use order\helpers\OrderUrlHelper;
 use order\services\OrderService;

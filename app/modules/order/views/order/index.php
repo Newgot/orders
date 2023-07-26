@@ -1,7 +1,7 @@
 <?php
 
 use order\helpers\OrderUrlHelper;
-use app\modules\order\Module;
+use order\Module;
 use yii\data\Pagination;
 use yii\helpers\Url;
 

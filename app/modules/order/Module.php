@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\order;
+namespace order;
 use Yii;
 use yii\i18n\PhpMessageSource;
 
@@ -15,11 +15,5 @@ class Module extends \yii\base\Module
     {
         parent::init();
         $this->layout = 'main';
-        Yii::setAlias('@order', __DIR__);
-        Yii::$app->i18n->translations['order'] = [
-            'class' => PhpMessageSource::class,
-            'sourceLanguage' => 'en-US',
-            'basePath' => '@order/messages',
-        ];
     }
 }

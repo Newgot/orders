@@ -1,12 +1,13 @@
 <?php
 
+use yii\i18n\PhpMessageSource;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
-
+Yii::$classMap['order'] = '@app/modules/order/Module';
 $config = [
     'id' => 'basic',
     'defaultRoute' => 'order/order/index',
-
     'basePath' => dirname(__DIR__),
     'language' => 'en',
     'sourceLanguage' => 'en',
@@ -14,6 +15,7 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+        '@order' => '@app/modules/order'
     ],
     'components' => [
         'request' => [
@@ -46,7 +48,15 @@ $config = [
             ],
         ],
         'db' => $db,
-
+        'i18n' => [
+            'translations' => [
+                'order*' => [
+                    'class' => PhpMessageSource::class,
+                    'sourceLanguage' => 'en-US',
+                    'basePath' => '@order/messages',
+                ],
+            ],
+        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -60,7 +70,7 @@ $config = [
     'params' => $params,
     'modules' => [
         'order' => [
-            'class' => app\modules\order\Module::class,
+            'class' => order\Module::class,
         ],
     ],
 ];
