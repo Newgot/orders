@@ -2,6 +2,7 @@
 
 namespace app\modules\order\models;
 
+use app\modules\order\helpers\OrderUrlHelper;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveQuery;
@@ -22,7 +23,7 @@ class OrderSearch extends Model
 
     protected array $queryParams = [];
 
-    public const FILTER_NAMES = ['service_id', 'mode', 'status'];
+
 
     /**
      * @return array
@@ -62,7 +63,7 @@ class OrderSearch extends Model
                 return Order::scopeAll()->andWhere(['LIKE', Order::TABLE . '.link', $search]);
             }
         }
-        return Order::scopeAll()->filterWhere($this->getRulesFilter());
+        return Order::scopeAll()->filterWhere(OrderUrlHelper::getRulesFilter(Order::FILTER_NAMES));
     }
 
     /**
@@ -101,20 +102,5 @@ class OrderSearch extends Model
         if (!in_array($this->$attribute, array_keys(Order::STATUSES))) {
             $this->addError($attribute, Yii::t('order', 'Not valid status'));
         }
-    }
-
-    /**
-     * get all filter rules from the order in the queryParam
-     * @return array
-     */
-    protected function getRulesFilter(): array
-    {
-        $rules = [];
-        foreach ($this->getQueryParams() as $keyParam => $param) {
-            if (in_array($keyParam, self::FILTER_NAMES)) {
-                $rules[$keyParam] = $param;
-            }
-        }
-        return $rules;
     }
 }

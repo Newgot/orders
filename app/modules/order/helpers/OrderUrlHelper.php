@@ -65,4 +65,20 @@ class OrderUrlHelper
             ? $params[$key]
             : '';
     }
+
+    /**
+     * get all filter rules from the order in the queryParam
+     * @param $filters
+     * @return array
+     */
+    public static function getRulesFilter($filters): array
+    {
+        $rules = [];
+        foreach (Yii::$app->request->queryParams as $keyParam => $param) {
+            if (in_array($keyParam, $filters)) {
+                $rules[$keyParam] = $param;
+            }
+        }
+        return $rules;
+    }
 }
