@@ -13,7 +13,7 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-/vendor
+/app/vendor
 
 # composer itself is not needed
 composer.phar
@@ -35,4 +35,7 @@ tests/_support/_generated
 #vagrant folder
 /.vagrant
 
-docker/volume_mysql/
+/docker/volume_mysql
+
+/docker/.env
+.env

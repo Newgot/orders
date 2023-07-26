@@ -12,7 +12,7 @@ Run the installation triggers (creating cookie validation code)
     
 Start the container
 
-    docker-compose up -d
+    docker-compose -f docker/docker-compose.yml up -d
     
 You can then access the application through the following URL:
 
