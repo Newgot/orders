@@ -1,13 +1,13 @@
 <?php
 
-namespace app\modules\order\models;
+namespace order\models\search;
 
 use order\helpers\OrderUrlHelper;
-use Yii;
+use order\models\Order;
+use order\models\User;
 use yii\base\Model;
 use yii\db\ActiveQuery;
-use order\models\User;
-use order\models\Order;
+
 /**
  * Order search model
  */

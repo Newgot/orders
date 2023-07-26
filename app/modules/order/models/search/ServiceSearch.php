@@ -1,8 +1,9 @@
 <?php
 
-namespace order\models;
+namespace order\models\search;
 
 use order\helpers\OrderUrlHelper;
+use order\models\Order;
 use order\models\Service;
 use yii\base\Model;
 use yii\db\Query;

@@ -4,7 +4,6 @@ use yii\i18n\PhpMessageSource;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
-Yii::$classMap['order'] = '@app/modules/order/Module';
 $config = [
     'id' => 'basic',
     'defaultRoute' => 'order/order/index',

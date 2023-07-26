@@ -3,8 +3,8 @@
 namespace order\services;
 
 use order\models\Order;
-use app\modules\order\models\OrderSearch;
-use order\models\ServiceSearch;
+use order\models\search\ServiceSearch;
+use order\models\search\OrderSearch;
 use Yii;
 use yii\data\Pagination;
 
