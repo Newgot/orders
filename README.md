@@ -48,6 +48,6 @@ return [
 
 **MIGRATION**
 
-    yii migrate
+    ./app/yii migrate --migrationPath ./migrations
 
 test dates simple import from **test_db_data.sql**

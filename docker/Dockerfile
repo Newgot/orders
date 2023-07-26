@@ -1,0 +1,1 @@
+RUN cat .env
