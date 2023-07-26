@@ -13,14 +13,11 @@ use yii\db\ActiveQuery;
  */
 class OrderSearch extends Model
 {
-    public ?string $name = null;
-    public ?int $quantity = null;
-    public ?string $mode = null;
-    public ?int $status = null;
-    public ?int $service_id = null;
-    public ?string $search = null;
-
-    public  int $search_type;
+    public string $status = '';
+    public string $mode = '';
+    public string $service_id = '';
+    public string $search = '';
+    public string $search_type = '';
 
     protected array $queryParams = [];
 
@@ -32,10 +29,14 @@ class OrderSearch extends Model
     public function rules(): array
     {
         return [
-            ['mode', 'validateMode'],
+            ['status', 'integer'],
             ['status', 'validateStatus'],
+            ['mode', 'integer'],
+            ['mode', 'validateMode'],
             ['service_id', 'integer'],
+            ['search', 'string'],
             ['search', 'required', 'when' => fn($model) => !empty($model->search_type)],
+            ['search_type', 'integer'],
             ['search_type', 'required', 'when' => fn($model) => !empty($model->search)],
         ];
     }
