@@ -1,9 +1,8 @@
 <?php
 
-namespace app\modules\order\models;
+namespace order\models;
 
 use yii\db\ActiveRecord;
-use yii\db\Query;
 
 /**
  * Service model

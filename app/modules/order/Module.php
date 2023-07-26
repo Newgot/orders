@@ -11,7 +11,8 @@ class Module extends \yii\base\Module
 {
     const TITLE = 'Order';
 
-    public function init() {
+    public function init(): void
+    {
         parent::init();
         $this->layout = 'main';
         Yii::setAlias('@order', __DIR__);

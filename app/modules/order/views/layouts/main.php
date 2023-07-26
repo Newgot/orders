@@ -3,7 +3,7 @@
 
 /** @var string $content */
 
-use app\modules\order\assets\OrderAsset;
+use order\assets\OrderAsset;
 use yii\bootstrap5\Html;
 
 OrderAsset::register($this);

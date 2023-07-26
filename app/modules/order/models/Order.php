@@ -1,9 +1,10 @@
 <?php
 
-namespace app\modules\order\models;
+namespace order\models;
 
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use order\models\Service;
 
 /**
  * Order model

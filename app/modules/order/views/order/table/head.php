@@ -1,7 +1,7 @@
 <?php
 
-use app\modules\order\helpers\OrderUrlHelper;
-use app\modules\order\models\Order;
+use order\helpers\OrderUrlHelper;
+use order\models\Order;
 use yii\helpers\Url;
 
 /** @var array $services */

@@ -2,11 +2,12 @@
 
 namespace app\modules\order\models;
 
-use app\modules\order\helpers\OrderUrlHelper;
+use order\helpers\OrderUrlHelper;
 use Yii;
 use yii\base\Model;
 use yii\db\ActiveQuery;
-
+use order\models\User;
+use order\models\Order;
 /**
  * Order search model
  */

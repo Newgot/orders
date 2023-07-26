@@ -2,8 +2,8 @@
 
 namespace app\modules\order\controllers;
 
-use app\modules\order\helpers\OrderUrlHelper;
-use app\modules\order\services\OrderService;
+use order\helpers\OrderUrlHelper;
+use order\services\OrderService;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -27,7 +27,7 @@ class OrderController extends Controller
      * @param int $page
      * @return Response | string
      */
-    public function actionIndex(int $page = 1)
+    public function actionIndex(int $page = 1): string | Response
     {
         if (Yii::$app->request->url === self::HOME_URL) {
             return $this->redirect(['order/']);

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\order\helpers;
+namespace order\helpers;
 
 use Yii;
 

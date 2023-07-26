@@ -1,10 +1,10 @@
 <?php
 
-namespace app\modules\order\services;
+namespace order\services;
 
-use app\modules\order\models\Order;
+use order\models\Order;
 use app\modules\order\models\OrderSearch;
-use app\modules\order\models\ServiceSearch;
+use order\models\ServiceSearch;
 use Yii;
 use yii\data\Pagination;
 
