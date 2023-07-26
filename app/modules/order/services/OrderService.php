@@ -43,7 +43,6 @@ class OrderService
     {
         $count = $this->model->search()->count();
         return new Pagination([
-            'pageSize' => self::PAGINATION_LIMIT,
             'totalCount' => $count,
         ]);
     }
