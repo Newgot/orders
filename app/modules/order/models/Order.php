@@ -11,10 +11,11 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $link
  * @property string $quantity
- * @property string $serviceOrder
+ * @property Service $serviceOrder
  * @property string $statusName
  * @property string $modeName,
  * @property array $createdDate
+ * @property string $created_at
  */
 class Order extends ActiveRecord
 {

@@ -2,7 +2,9 @@
 
 namespace order\controllers;
 
+use JetBrains\PhpStorm\NoReturn;
 use order\helpers\OrderUrlHelper;
+use order\services\CSVService;
 use order\services\OrderService;
 use Yii;
 use yii\web\Controller;
@@ -15,11 +17,13 @@ class OrderController extends Controller
 {
     protected const HOME_URL = '/';
     protected ?OrderService $service = null;
+    protected ?CSVService $csvService = null;
 
     public function __construct($id, $module, $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = new OrderService();
+        $this->csvService = new CSVService();
     }
 
     /**
@@ -27,7 +31,7 @@ class OrderController extends Controller
      * @param int $page
      * @return Response | string
      */
-    public function actionIndex(int $page = 1): string | Response
+    public function actionIndex(int $page = 1): string|Response
     {
         if (Yii::$app->request->url === self::HOME_URL) {
             return $this->redirect(['order/']);
@@ -53,12 +57,13 @@ class OrderController extends Controller
 
     /**
      * generate csv file
-     * @return string
+     * @return void
      */
-    public function actionLoad(): string
+    #[NoReturn] public function actionLoad(): void
     {
-        ini_set('memory_limit', '2G');
+        $this->layout = '';
         OrderUrlHelper::setCSVHeader();
-        return $this->service->csv();
+        $this->csvService->load();
+        exit();
     }
 }

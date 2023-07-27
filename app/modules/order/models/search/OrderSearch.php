@@ -7,6 +7,7 @@ use order\models\Order;
 use order\models\User;
 use yii\base\Model;
 use yii\db\ActiveQuery;
+use Yii;
 
 /**
  * Order search model
@@ -20,7 +21,6 @@ class OrderSearch extends Model
     public string $search_type = '';
 
     protected array $queryParams = [];
-
 
 
     /**
@@ -88,7 +88,7 @@ class OrderSearch extends Model
      * @param $attribute
      * @return void
      */
-    public function  validateMode($attribute)
+    public function validateMode($attribute)
     {
         if (!in_array($this->$attribute, array_keys(Order::MODES))) {
             $this->addError($attribute, Yii::t('order', 'Not valid mode'));
@@ -99,7 +99,7 @@ class OrderSearch extends Model
      * @param $attribute
      * @return void
      */
-    public function  validateStatus($attribute)
+    public function validateStatus($attribute)
     {
         if (!in_array($this->$attribute, array_keys(Order::STATUSES))) {
             $this->addError($attribute, Yii::t('order', 'Not valid status'));

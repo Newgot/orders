@@ -2,7 +2,6 @@
 
 namespace order\services;
 
-use order\models\Order;
 use order\models\search\ServiceSearch;
 use order\models\search\OrderSearch;
 use Yii;
@@ -14,7 +13,7 @@ use yii\data\Pagination;
 class OrderService
 {
     protected const PAGINATION_LIMIT = 100;
-    protected OrderSearch $model;
+    public OrderSearch $model;
 
     public function __construct()
     {
@@ -106,38 +105,5 @@ class OrderService
             'search' => Yii::$app->request->queryParams['search'] ?? '',
             'searchType' => Yii::$app->request->queryParams['search_type'] ?? '',
         ];
-    }
-
-    /**
-     * get csv file
-     * @return string
-     */
-    public function csv(): string
-    {
-        $file = $this->getCSVHead();
-        foreach ($this->model->search()->all() as $order) {
-            /** @var Order $order */
-            $file .= "$order->id, $order->name, $order->link, $order->quantity, ";
-            $file .= "{$order->serviceOrder->name}, $order->statusName, $order->modeName, ";
-            $file .= "{$order->createdDate['0']} {$order->createdDate['1']} " . PHP_EOL;
-        }
-        return $file;
-    }
-
-    /**
-     * get names line from csv
-     * @return string
-     */
-    protected function getCSVHead(): string
-    {
-        return
-            Yii::t('order', 'ID') . ', ' .
-            Yii::t('order', 'User') . ', ' .
-            Yii::t('order', 'Link') . ', ' .
-            Yii::t('order', 'Quantity') . ', ' .
-            Yii::t('order', 'Service') . ', ' .
-            Yii::t('order', 'Status') . ', ' .
-            Yii::t('order', 'Mode') . ', ' .
-            Yii::t('order', 'Created') . PHP_EOL;
     }
 }
